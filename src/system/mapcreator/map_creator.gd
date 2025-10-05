@@ -8,8 +8,8 @@ func _ready() -> void:
 	var map := $Map
 	for c in copy_nodes:
 		var copy := c.duplicate()
-		copy.owner = map
 		map.add_child(copy)
+		copy.owner = self
 	recursive_material_swap(map)
 
 

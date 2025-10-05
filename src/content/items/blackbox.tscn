@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://di3h8k238uyit"]
+
+[ext_resource type="Script" uid="uid://0w26g7voopm3" path="res://content/items/blackbox.gd" id="1_278bc"]
+[ext_resource type="Script" uid="uid://b5p4attr3nuyn" path="res://content/interactables/interaction.gd" id="2_7tihc"]
+[ext_resource type="PackedScene" uid="uid://cdjlcyxkbrxdl" path="res://content/items/blackbox.glb" id="3_51mp6"]
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="4_xy5bu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_278bc"]
+size = Vector3(0.46850586, 0.57250977, 0.64746094)
+
+[node name="Blackbox" type="Node3D"]
+script = ExtResource("1_278bc")
+
+[node name="Interaction" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_7tihc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interaction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.022949219, 0)
+shape = SubResource("BoxShape3D_278bc")
+
+[node name="blackbox" parent="." instance=ExtResource("3_51mp6")]
+transform = Transform3D(4.975, 0, 0, 0, 4.975, 0, 0, 0, 4.975, 0, 0, 0)
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(-6.2992953e-09, -0.086810775, 0.16788355, -3.7946193e-09, 0.16788355, 0.086810775, -0.189, -4.772882e-10, -7.338423e-09, 0.053584006, 0.062710375, 0.06681866)
+alpha_cut = 1
+modulate = Color(0, 0, 0, 1)
+text = "RECORDER"
+font = ExtResource("4_xy5bu")
+font_size = 20
+outline_size = 0
+
+[node name="Label3D3" type="Label3D" parent="."]
+transform = Transform3D(-2.3301963e-09, -0.23009163, 0.074978925, -9.123262e-09, 0.074978925, 0.23009163, -0.24199998, -6.111313e-10, -9.396287e-09, 0.03643585, 0.08256316, 0.06681866)
+alpha_cut = 1
+modulate = Color(0, 0, 0, 1)
+text = "FLIGHT"
+font = ExtResource("4_xy5bu")
+font_size = 20
+outline_size = 0
+
+[connection signal="highlight_stopped" from="Interaction" to="." method="_on_interaction_highlight_stopped"]
+[connection signal="highlights_started" from="Interaction" to="." method="_on_interaction_highlights_started"]
+[connection signal="interacted" from="Interaction" to="." method="_on_interaction_interacted"]
+
+[editable path="blackbox"]

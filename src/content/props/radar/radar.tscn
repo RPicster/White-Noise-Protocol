@@ -1,11 +1,30 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwq3btl8dlhkw"]
+[gd_scene load_steps=14 format=3 uid="uid://cwq3btl8dlhkw"]
 
 [ext_resource type="Script" uid="uid://bcts80smijr14" path="res://content/props/radar/radar.gd" id="1_oo0n2"]
 [ext_resource type="PackedScene" uid="uid://cjcnaed1tu6xa" path="res://content/props/radar/radar.glb" id="1_yi3on"]
-[ext_resource type="Material" uid="uid://0ojaj4mkamg3" path="res://content/materials/screen_mat.tres" id="3_bad8r"]
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="3_sufeq"]
 [ext_resource type="Script" uid="uid://b5p4attr3nuyn" path="res://content/interactables/interaction.gd" id="4_k8y8q"]
 [ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="4_sufeq"]
 [ext_resource type="PackedScene" uid="uid://bywuygc0nn732" path="res://content/props/radar/radar_screen.tscn" id="5_bad8r"]
+[ext_resource type="AudioStream" uid="uid://beu4w6qoefhxp" path="res://sounds/beep_1.wav" id="7_nu7p8"]
+[ext_resource type="AudioStream" uid="uid://dblijiv21rh35" path="res://sounds/extend_station.wav" id="8_1nexx"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_n675j"]
+viewport_path = NodePath("ScreenViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nu7p8"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_sufeq")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/glow = 4.0
+shader_parameter/albedo = SubResource("ViewportTexture_n675j")
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/backlight = 0.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(640, 360)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5egpa"]
 size = Vector3(0.9609375, 0.62109375, 0.12890625)
@@ -23,7 +42,7 @@ script = ExtResource("1_oo0n2")
 [node name="radar" parent="." instance=ExtResource("1_yi3on")]
 
 [node name="RadarScreen" parent="radar" index="2"]
-material_override = ExtResource("3_bad8r")
+material_override = SubResource("ShaderMaterial_nu7p8")
 
 [node name="RadarmastConsoleCap" parent="radar" index="4"]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -0.053414524, 0.28108463, -0.48504966)
@@ -83,6 +102,14 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("CylinderShape3D_sufeq")
+
+[node name="Beep" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_nu7p8")
+volume_db = -6.0
+
+[node name="ExtendStatiopn" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_1nexx")
+unit_size = 15.0
 
 [connection signal="highlight_stopped" from="DoorInteraction" to="." method="_on_door_highlight_stopped"]
 [connection signal="highlights_started" from="DoorInteraction" to="." method="_on_door_highlights_started"]

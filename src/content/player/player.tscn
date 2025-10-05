@@ -1,10 +1,19 @@
-[gd_scene load_steps=18 format=3 uid="uid://bg22rxxq3pvj8"]
+[gd_scene load_steps=32 format=3 uid="uid://bg22rxxq3pvj8"]
 
 [ext_resource type="Script" uid="uid://b62yyvshlyntb" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Material" uid="uid://i11xch2q05kl" path="res://content/post_process/ps1_post_process_mat.tres" id="2_y66qv"]
 [ext_resource type="PackedScene" uid="uid://cnchhtveu4jmf" path="res://content/items/compass/compass.tscn" id="3_oq5wi"]
 [ext_resource type="Material" uid="uid://qth25g6ccp5b" path="res://content/post_process/ps1_post_process_inside_mat.tres" id="4_3ac0f"]
 [ext_resource type="Texture2D" uid="uid://olfnp8sdg1p6" path="res://content/materials/texture/noise.png" id="4_i4jjh"]
+[ext_resource type="Texture2D" uid="uid://bfjwiuegeq8yv" path="res://gui/blood.png" id="6_o23i7"]
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="7_gdtqi"]
+[ext_resource type="AudioStream" uid="uid://c2h5iy5ytobhw" path="res://sounds/footstep_snow_1.wav" id="8_q05y8"]
+[ext_resource type="AudioStream" uid="uid://b3gk3ns5mc6nu" path="res://sounds/footstep_snow_2.wav" id="9_sks62"]
+[ext_resource type="AudioStream" uid="uid://du00fxxbyqp1k" path="res://sounds/footstep_snow_3.wav" id="10_6pxk4"]
+[ext_resource type="AudioStream" uid="uid://bxpg1esclq8xm" path="res://sounds/footstep_snow_4.wav" id="11_5u4yr"]
+[ext_resource type="AudioStream" uid="uid://doaixckdk2t6o" path="res://sounds/footstep_snow_6.wav" id="13_fmriv"]
+[ext_resource type="AudioStream" uid="uid://chmcfxusq2ex0" path="res://sounds/footstep_snow_7.wav" id="14_v3tlx"]
+[ext_resource type="AudioStream" uid="uid://cnd2r57e1qusa" path="res://sounds/footstep_snow_8.wav" id="15_pull8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oq5wi"]
 flip_faces = true
@@ -15,8 +24,9 @@ radius = 0.2
 height = 1.6
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_2rga7"]
+slide_on_slope = true
 
-[sub_resource type="Shader" id="Shader_3ac0f"]
+[sub_resource type="Shader" id="Shader_gdtqi"]
 code = "shader_type spatial;
 render_mode blend_mix, cull_back, diffuse_burley, specular_disabled;
 
@@ -85,15 +95,15 @@ void fragment() {
 offsets = PackedFloat32Array(0, 0.23640494, 0.8206746, 1)
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_gdtqi"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rmk25"]
 gradient = SubResource("Gradient_o23i7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rmk25"]
 render_priority = 0
-shader = SubResource("Shader_3ac0f")
+shader = SubResource("Shader_gdtqi")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_noise = ExtResource("4_i4jjh")
-shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_gdtqi")
+shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_rmk25")
 shader_parameter/proximity_fade_distance = 0.6
 shader_parameter/distance_fade_min = 10.0
 shader_parameter/distance_fade_max = 4.0
@@ -268,10 +278,10 @@ size = Vector2(0.03, 0.03)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i4jjh"]
 render_priority = 0
-shader = SubResource("Shader_3ac0f")
+shader = SubResource("Shader_gdtqi")
 shader_parameter/albedo = Color(1, 1, 1, 0.13725491)
 shader_parameter/texture_noise = ExtResource("4_i4jjh")
-shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_gdtqi")
+shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_rmk25")
 shader_parameter/proximity_fade_distance = 0.4
 shader_parameter/distance_fade_min = 10.0
 shader_parameter/distance_fade_max = 4.0
@@ -297,9 +307,42 @@ shader_parameter/emission_box_extents = Vector3(10, 4, 10)
 shader_parameter/gravity = Vector3(0, 0, 0.5)
 shader_parameter/emission_box_rotation = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="Gradient" id="Gradient_gdtqi"]
+colors = PackedColorArray(0.544, 0.10838784, 0.077193476, 1, 0.088, 0.017533332, 0.01248718, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rmk25"]
+gradient = SubResource("Gradient_gdtqi")
+width = 640
+height = 360
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_rmk25"]
+colors = PackedColorArray(0.19624144, 0.40490302, 0.544, 1, 0.088, 0.017533332, 0.01248718, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bkj32"]
+gradient = SubResource("Gradient_rmk25")
+width = 640
+height = 360
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1esvc"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 7
+stream_0/stream = ExtResource("8_q05y8")
+stream_1/stream = ExtResource("9_sks62")
+stream_2/stream = ExtResource("10_6pxk4")
+stream_3/stream = ExtResource("11_5u4yr")
+stream_4/stream = ExtResource("13_fmriv")
+stream_5/stream = ExtResource("14_v3tlx")
+stream_6/stream = ExtResource("15_pull8")
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_2rga7")
+decceleration = 15.0
 
 [node name="Items" type="Node3D" parent="."]
 
@@ -309,7 +352,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.172, -0.268)
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="Camera3D" type="Camera3D" parent="Head" groups=["player-camera"]]
 current = true
 
 [node name="PostProcessOutside" type="MeshInstance3D" parent="Head/Camera3D"]
@@ -327,7 +370,7 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_oq5wi")
 
 [node name="Interactor" type="RayCast3D" parent="Head/Camera3D"]
-target_position = Vector3(0, 0, -1)
+target_position = Vector3(0, 0, -2)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
@@ -352,14 +395,14 @@ shape = SubResource("SeparationRayShape3D_2rga7")
 transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0.1077863, 1, -0.00979882)
 shape = SubResource("SeparationRayShape3D_2rga7")
 
-[node name="Snow" type="GPUParticles3D" parent="."]
+[node name="Snow" type="GPUParticles3D" parent="." groups=["snow"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7385116, -1.7458842)
 visible = false
 sorting_offset = 4.165
 material_override = SubResource("ShaderMaterial_rmk25")
 cast_shadow = 0
-amount = 1800
-lifetime = 16.0
+amount = 5000
+lifetime = 4.0
 process_material = SubResource("ShaderMaterial_cvehv")
 draw_pass_1 = SubResource("QuadMesh_vx4xa")
 
@@ -373,3 +416,94 @@ amount = 300
 lifetime = 8.0
 process_material = SubResource("ShaderMaterial_3ac0f")
 draw_pass_1 = SubResource("QuadMesh_vx4xa")
+
+[node name="Damage" type="CanvasLayer" parent="."]
+
+[node name="Hit" type="TextureRect" parent="Damage"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rmk25")
+expand_mode = 1
+
+[node name="Damage" type="TextureRect" parent="Damage"]
+unique_name_in_owner = true
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("6_o23i7")
+expand_mode = 1
+
+[node name="DeathLabel" type="Label" parent="Damage"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1254902)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/font = ExtResource("7_gdtqi")
+theme_override_font_sizes/font_size = 37
+text = "Whiteout"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Drown" type="CanvasLayer" parent="."]
+
+[node name="DrownMask" type="TextureRect" parent="Drown"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_bkj32")
+expand_mode = 1
+
+[node name="DrownLabel" type="Label" parent="Drown"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1254902)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/font = ExtResource("7_gdtqi")
+theme_override_font_sizes/font_size = 37
+text = "Drowned"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StepSnow" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_1esvc")
+volume_db = -12.0
+max_polyphony = 5

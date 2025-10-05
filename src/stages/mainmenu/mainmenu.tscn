@@ -1,0 +1,260 @@
+[gd_scene load_steps=14 format=3 uid="uid://c1pgagj827385"]
+
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="1_5upel"]
+[ext_resource type="Texture2D" uid="uid://pins6fy8quep" path="res://gui/logo.png" id="1_mkqru"]
+[ext_resource type="Script" uid="uid://c4ddw51fptxfs" path="res://stages/mainmenu/mainmenu.gd" id="1_r046x"]
+[ext_resource type="FontFile" uid="uid://ccsme0sl1y8ye" path="res://gui/Aleo-Medium.ttf" id="3_t8bck"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8bck"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r046x"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfu2u"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joqdg"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sgc7"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lh4fo"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p17gt"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oi473"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_si8gg"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r046x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -8
+
+[node name="Control5" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+modulate = Color(0.8901961, 0.4392157, 0, 1)
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_mkqru")
+expand_mode = 3
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 18.69)
+layout_mode = 2
+
+[node name="IntroLabel1" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("1_5upel")
+theme_override_font_sizes/font_size = 41
+text = "EVERETT"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel3" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("1_5upel")
+theme_override_font_sizes/font_size = 30
+text = "WHITE NOISE
+PROTOCOL"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="Control2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="IntroLabel4" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("1_5upel")
+theme_override_font_sizes/font_size = 14
+text = "Your shift is starting. Choose your profession."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="Control3" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 21.335)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonPioneer" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_t8bck")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_t8bck")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_r046x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mfu2u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_joqdg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0sgc7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_lh4fo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_p17gt")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_oi473")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_si8gg")
+text = "Pioneer"
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="ButtonSupervisor" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_t8bck")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_t8bck")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_r046x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mfu2u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_joqdg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0sgc7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_lh4fo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_p17gt")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_oi473")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_si8gg")
+text = "Supervisor"
+
+[node name="Control4" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30.725)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="IntroLabel5" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("1_5upel")
+theme_override_font_sizes/font_size = 12
+text = "This game is a coop game for two players.
+To play it, get into a voice call with another player.
+Communication is key.
+Start the game together choosing different professions!"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel6" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_5upel")
+theme_override_font_sizes/font_size = 12
+text = "Game by Raffaele Picca - Made in 48h for LD58 Compo
+F11 : Fullscreen | F5 : Respawn (if you are stuck, only for Pioneer)"
+horizontal_alignment = 1
+vertical_alignment = 2
+visible_characters_behavior = 1
+
+[node name="Fade" type="CanvasLayer" parent="."]
+
+[node name="WhiteFade" type="ColorRect" parent="Fade"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BlackFade" type="ColorRect" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonPioneer" to="." method="_on_button_pioneer_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonSupervisor" to="." method="_on_button_supervisor_pressed"]

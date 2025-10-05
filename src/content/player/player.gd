@@ -2,8 +2,8 @@ extends CharacterBody3D
 
 @export var is_inside := false
 
-@export var max_speed := 3.0
-@export var max_speed_sprinting := 5.0
+@export var max_speed := 5.0
+@export var max_speed_sprinting := 9.0
 @export var acceleration := 20.0
 @export var decceleration := 10.0
 @export var mouse_sensitivity := 3.0
@@ -11,17 +11,27 @@ extends CharacterBody3D
 @export var cam_vertical_limit := PI*0.48
 @export var cam_default_fov := 75.0
 
+var fall_damage := 0.0
 var is_sprinting := false
 var block := false
+var last_global_position : Vector3
+var on_ground_for := 0.0
+var health := 20.0
+var is_dead := false
+var damage_tween : Tween
+var damage_tween_cam : Tween
 
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
 @onready var interactor: RayCast3D = $Head/Camera3D/Interactor
 @onready var camera: Camera3D = $Head/Camera3D
+@onready var damage: TextureRect = %Damage
 
 var last_interactor : Node
+var step_distance := 0.0
 
 func _ready() -> void:
+	_G.player = self
 	camera_3d.fov = cam_default_fov
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if is_inside:
@@ -37,10 +47,74 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if block:
 		return
+	
+	check_kill()
+	slowly_heal(delta)
 	check_interactor()
 	control_movement(delta)
 	control_camera(delta)
 	move_and_slide()
+	check_falldamage(delta)
+	stepper()
+	last_global_position = global_position
+
+func stepper():
+	if is_on_floor():
+		step_distance += global_position.distance_to(last_global_position)
+		if step_distance > 1.3:
+			if is_inside:
+				pass
+			else:
+				$StepSnow.play()
+			step_distance = 0.0
+
+func slowly_heal(delta):
+	if is_dead:
+		return
+	if health <= 0.0:
+		die()
+		return
+	health = clamp(delta+health, 0.0, 20.0)
+	damage.modulate.a = remap(health, 0.0, 20.0, 1.0, 0.0)
+
+func check_kill():
+	if global_position.y <= -70.0:
+		drown()
+
+func drown():
+	if is_dead:
+		return
+	if damage_tween:
+		damage_tween.kill()
+	damage_tween = create_tween()
+	damage_tween.tween_property(%DrownMask, "modulate:a", 1.0, 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	damage_tween.tween_property(%DrownLabel, "modulate:a", 1.0, 1.8).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE).set_delay(2.0)
+	damage_tween.tween_callback(respawn).set_delay(5.0)
+	block = true
+	is_dead = true
+
+func die():
+	if is_dead:
+		return
+	damage.modulate.a = 1.0
+	if damage_tween:
+		damage_tween.kill()
+	damage_tween = create_tween()
+	damage_tween.tween_property(%Hit, "modulate:a", 0.7, 1.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	if damage_tween_cam:
+		damage_tween_cam.kill()
+	damage_tween_cam = create_tween().set_parallel()
+	damage_tween_cam.tween_property(camera, "rotation:z", 0.5, 1.1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	damage_tween_cam.tween_property(camera, "position:y", -0.7, 1.1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	damage_tween_cam.tween_property(%DeathLabel, "modulate:a", 1.0, 1.8).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE).set_delay(2.0)
+	damage_tween_cam.tween_callback(respawn).set_delay(5.0)
+	block = true
+	is_dead = true
+
+func respawn():
+	_G.outside.fade_in()
+	await _G.outside.faded_in
+	_G.outside.respawn()
 
 func _input(event) -> void:
 	if block:
@@ -63,7 +137,11 @@ func check_interactor():
 		
 
 func control_movement(delta):
-	is_sprinting = Input.is_action_pressed("sprint")
+	if Input.is_action_just_pressed("jump") and is_on_floor() and on_ground_for > 0.1:
+		velocity.y += 4.0
+		
+	#is_sprinting = Input.is_action_pressed("sprint")
+	is_sprinting = false
 	var input_vector := Input.get_vector("move_left", "move_right", "move_back", "move_fwd")
 	var current_max_speed := max_speed if not is_sprinting else max_speed_sprinting
 	if input_vector.length() > 0.1:
@@ -78,7 +156,32 @@ func control_movement(delta):
 	else:
 		velocity = velocity.move_toward(Vector3(0.0, velocity.y, 0.0), delta*decceleration)
 	if not is_on_floor():
-		velocity += get_gravity()
+		velocity += get_gravity() * delta
+
+func check_falldamage(delta):
+	if is_dead:
+		return
+	if not is_on_floor():
+		fall_damage += last_global_position.y - global_position.y
+		on_ground_for = 0.0
+	else:
+		on_ground_for = min(on_ground_for+delta, 0.5)
+		if on_ground_for > 0.1:
+			if fall_damage > 4.0:
+				if damage_tween_cam:
+					damage_tween_cam.kill()
+				damage_tween_cam = create_tween()
+				damage_tween_cam.tween_property(camera, "rotation:z", randf_range(0.1, 0.2)+fall_damage*0.05, 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+				damage_tween_cam.tween_property(camera, "rotation:z", 0.0, 0.4+fall_damage*0.1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				if damage_tween:
+					damage_tween.kill()
+				damage_tween = create_tween()
+				damage_tween.tween_property(%Hit, "modulate:a", remap(fall_damage, 4.0, 20.0, 0.2, 1.0), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+				damage_tween.tween_property(%Hit, "modulate:a", 0.0, 0.4+fall_damage*0.1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				health -= fall_damage
+				if health <= 0.0:
+					die()
+			fall_damage = 0.0
 
 func rotate_body(offset:float):
 	rotation.y -= offset

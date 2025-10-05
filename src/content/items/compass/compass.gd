@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	var err := angle_difference(compass_needle.rotation.y, target_needle_rotation)
 	needle_spring = lerp(needle_spring, err*0.5, 0.05)
 	compass_needle.rotation.y += needle_spring
-	visual.visible = is_active
+	visual.visible = visual.position.y > 0.2
 	visual.position.y = lerp(visual.position.y, 0.0 if not is_active else 0.4, delta*5.0)
 	visual.position.z = lerp(visual.position.z, 0.4 if not is_active else 0.0, delta*5.0)
 	visual.scale = lerp(visual.scale, Vector3.ONE*0.1 if not is_active else Vector3.ONE, delta*5.0)

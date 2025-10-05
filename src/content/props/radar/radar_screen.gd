@@ -17,7 +17,7 @@ func enable_screen():
 	t.tween_property($Content/Label, "visible_ratio", 1.0, 3.0).set_delay(1.0)
 
 func set_station_id(id:int):
-	$Content/Label.text = text % [id, CONST.STATION_CODES[id]]
+	$Content/Label.text = text % [id, _G.STATION_CODES[id]]
 
 func disable_screen():
 	content.hide()

@@ -1,0 +1,244 @@
+[gd_scene load_steps=14 format=3 uid="uid://8upom653ypyv"]
+
+[ext_resource type="PackedScene" uid="uid://cwq3btl8dlhkw" path="res://content/props/radar/radar.tscn" id="1_chkya"]
+[ext_resource type="Script" uid="uid://cshbm0pjmwf71" path="res://stages/outside/outside_stage.gd" id="1_osekw"]
+[ext_resource type="PackedScene" uid="uid://bopsk1oifitej" path="res://content/landscape/landscape.tscn" id="2_osekw"]
+[ext_resource type="PackedScene" uid="uid://bg22rxxq3pvj8" path="res://content/player/player.tscn" id="3_4u7gs"]
+[ext_resource type="PackedScene" uid="uid://d04y7kdwq40j5" path="res://content/props/tent.tscn" id="4_w1tbe"]
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="6_4u7gs"]
+[ext_resource type="PackedScene" uid="uid://c8ftoe1txx0x" path="res://content/snowmobile/snowmobile.tscn" id="7_w1tbe"]
+[ext_resource type="PackedScene" uid="uid://c3kq6ja7dx6q6" path="res://content/props/station_from_outside.tscn" id="8_1vd3l"]
+[ext_resource type="PackedScene" uid="uid://di3h8k238uyit" path="res://content/items/blackbox.tscn" id="9_xhuct"]
+[ext_resource type="AudioStream" uid="uid://dsii8gkym7t4h" path="res://sounds/wind.wav" id="10_7iyl8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bipwh"]
+sky_top_color = Color(0.6216, 0.7357714, 0.888, 1)
+sky_horizon_color = Color(0.9649123, 0.9766082, 1, 1)
+
+[sub_resource type="Sky" id="Sky_7aq2q"]
+sky_material = SubResource("ProceduralSkyMaterial_bipwh")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_c820o"]
+background_mode = 2
+sky = SubResource("Sky_7aq2q")
+ambient_light_source = 3
+tonemap_mode = 4
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_intensity = 0.15
+glow_bloom = 0.03
+glow_blend_mode = 1
+fog_mode = 1
+fog_light_color = Color(0.8516129, 0.9096774, 1, 1)
+fog_sun_scatter = 0.5
+fog_density = 1.0
+fog_depth_curve = 0.4352754
+fog_depth_begin = 0.0
+
+[node name="OutsideStage" type="Node3D"]
+script = ExtResource("1_osekw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c820o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.15389828, 0.635316, -0.75676215, 0.01423608, 0.76438123, 0.6446074, 0.9879842, -0.109977305, 0.10859255, 0, 0.9878403, 0)
+shadow_enabled = true
+shadow_bias = 0.3
+shadow_blur = 2.0
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.25
+directional_shadow_fade_start = 0.9
+directional_shadow_max_distance = 80.0
+
+[node name="Radar" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(-0.288397, 0, -0.9575109, 0, 1, 0, 0.9575109, 0, -0.288397, 109.191826, 16.792732, 301.78934)
+
+[node name="Radar2" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(0.6484123, 0, -0.76128936, 0, 1, 0, 0.76128936, 0, 0.6484123, 79.60063, -16.17537, -315.7277)
+station_id = 2
+
+[node name="Radar3" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(0.3394275, 0, -0.9406322, 0, 1, 0, 0.9406322, 0, 0.3394275, -132.33873, 24.131943, 214.84534)
+station_id = 3
+
+[node name="Radar4" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(-0.8413505, 0, 0.5404899, 0, 1, 0, -0.5404899, 0, -0.8413505, 556.88306, 19.393791, -446.37512)
+station_id = 4
+
+[node name="Landscape" parent="." instance=ExtResource("2_osekw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22.549149, 0)
+
+[node name="Tent" parent="." instance=ExtResource("4_w1tbe")]
+transform = Transform3D(-0.60462695, 0, 0.7965088, 0, 1, 0, -0.7965088, 0, -0.60462695, 87.371925, -18.690468, -316.1836)
+
+[node name="Fade" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="BlackFade" type="ColorRect" parent="Fade"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IntroLabel1" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "You woke up from a cold night.
+Barely survived.
+
+Your memories slowly come back."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel2" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "You went out last night
+to fix the stations.
+
+A terrible snowstorm came up.
+You found shelter in your emergency tent.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel3" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "Your job is to collect black boxes.
+Without the stations it is impossible to find
+them in this white hell.
+
+Communicate with the home base."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="WinScreen" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="WinFade" type="ColorRect" parent="WinScreen"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinLabel1" type="Label" parent="WinScreen"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "You collected the first black box of today!
+
+What a great job. Everett is proud of you."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="WinLabel2" type="Label" parent="WinScreen"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "This was a team effort of course!
+
+Celebrate with your coworker - you have proven
+to have exceptional navigation and team skills!"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="WinLabel3" type="Label" parent="WinScreen"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8901961, 0.4392157, 0, 1)
+theme_override_fonts/font = ExtResource("6_4u7gs")
+theme_override_font_sizes/font_size = 20
+text = "Your run took X minutes.
+
+You died X times."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="Snowmobile" parent="." instance=ExtResource("7_w1tbe")]
+transform = Transform3D(0.13557732, 0, -0.9907672, 0, 1, 0, 0.9907672, 0, 0.13557732, -265.85092, 38.972626, -292.43323)
+
+[node name="StationFromOutside" parent="." instance=ExtResource("8_1vd3l")]
+transform = Transform3D(0.4145027, 0, 0.91004807, 0, 1, 0, -0.91004807, 0, 0.4145027, -269.58795, 40.919056, -297.92395)
+
+[node name="Player" parent="." instance=ExtResource("3_4u7gs")]
+transform = Transform3D(-0.31831408, -4.656613e-10, 0.9479855, 1.8626451e-09, 1.0000004, 2.561137e-08, -0.9479853, 0, -0.31831414, 89.67926, -18.360458, -315.72015)
+
+[node name="Blackbox1" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97195417, -0.22083794, 0.08084456, 0.2239663, 0.9740779, -0.031809635, -0.07172412, 0.049024045, 0.996219, 307.82687, 42.322655, -116.9925)
+
+[node name="Blackbox2" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97195417, -0.22083794, 0.08084455, 0.22396633, 0.974078, -0.03180964, -0.07172412, 0.049024045, 0.996219, -29.111862, -6.998337, -106.35336)
+
+[node name="Blackbox3" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.09383805, 0.887966, 0.45023498, -0.17687401, -0.45990556, 0.8701739, 79.21645, -98.36054, -318.91748)
+
+[node name="Blackbox4" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.05249532, 0.9675619, 0.24712119, -0.19322067, -0.2526273, 0.94807434, -358.1915, -67.63577, -463.69318)
+
+[node name="Blackbox5" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.05249532, 0.9675619, 0.24712119, -0.19322067, -0.2526273, 0.94807434, -540.01215, -93.68711, -196.48004)
+
+[node name="Wind" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_7iyl8")
+volume_db = -12.0
+autoplay = true

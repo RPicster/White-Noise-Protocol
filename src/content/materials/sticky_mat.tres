@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dji1bxlf5spkc"]
+
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="1_u6mpd"]
+[ext_resource type="Texture2D" uid="uid://bwtuq3w4a05l7" path="res://content/materials/texture/sticky.png" id="2_u6mpd"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_u6mpd")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/glow = 0.0
+shader_parameter/albedo = ExtResource("2_u6mpd")
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/backlight = 0.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(640, 360)

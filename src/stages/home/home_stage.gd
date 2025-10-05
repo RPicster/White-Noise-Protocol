@@ -1,15 +1,31 @@
 extends Node3D
 
 var using_computer := false
+@export var override_intro := false
+
+func _ready():
+	if override_intro:
+		%BlackFade.modulate.a = 0.0
+		return
+	$Player.block = true
+	var t := create_tween().set_parallel()
+	t.tween_property(%IntroLabel1, "modulate:a", 1.0, 2.0).set_delay(1.0)
+	t.tween_property(%IntroLabel1, "modulate:a", 0.0, 1.0).set_delay(6.0)
+	t.tween_property(%IntroLabel2, "modulate:a", 1.0, 2.0).set_delay(8.0)
+	t.tween_property(%IntroLabel2, "modulate:a", 0.0, 1.0).set_delay(13.0)
+	t.tween_property(%IntroLabel3, "modulate:a", 1.0, 2.0).set_delay(15.0)
+	t.tween_property(%IntroLabel3, "modulate:a", 0.0, 1.0).set_delay(23.0)
+	t.tween_property(%BlackFade, "modulate:a", 0.0, 3.0).set_delay(20)
+	t.tween_callback(func(): $Player.block = false).set_delay(20)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape") and using_computer:
 		stop_using_computer()
 	if using_computer:
-		$ScreenViewport.push_input(event)
+		$ScreenViewport/ComputerScreen.input(event)
 
 func _on_computer_highlights_started() -> void:
-	$station/Keyboard.material_overlay = CONST.HIGHLIGHT_MAT
+	$station/Keyboard.material_overlay = _G.HIGHLIGHT_MAT
 
 
 func _on_computer_highlight_stopped() -> void:

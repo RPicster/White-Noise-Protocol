@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04y7kdwq40j5"]
+
+[ext_resource type="PackedScene" uid="uid://g6a6urtaanxk" path="res://content/props/tent.glb" id="1_te1sd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_te1sd"]
+radius = 2.289
+
+[node name="Tent" type="Node3D"]
+
+[node name="tent" parent="." instance=ExtResource("1_te1sd")]
+transform = Transform3D(2.11, 0, 0, 0, 2.11, 0, 0, 0, 2.11, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("SphereShape3D_te1sd")
+
+[node name="Spawnpoint" type="Marker3D" parent="." groups=["spawn-point"]]
+transform = Transform3D(0.73234093, 0, -0.6809382, 0, 1, 0, 0.6809382, 0, 0.73234093, 0, 0, 4.7328577)

@@ -6,8 +6,7 @@ shader_type spatial;
 render_mode blend_mix,
 	cull_back,
 	depth_prepass_alpha,
-	specular_disabled,
-	vertex_lighting;
+	specular_disabled;
 
 uniform vec3 LIGHT_DIR_WORLD = vec3(0.0, -1.0, 0.0); // direction the light points *toward* in world space
 

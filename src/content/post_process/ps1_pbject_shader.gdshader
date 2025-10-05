@@ -31,18 +31,8 @@ vec4 snap_to_position(vec4 base_position)
 	return snapped_position;
 }
 
-void vertex()
-{
-	vec4 snapped_position = snap_to_position(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
-	if (affine_mapping)
-	{
-		POSITION = snapped_position;
-		POSITION /= abs(POSITION.w);
-	}
-	else
-	{
-		POSITION = snapped_position;
-	}
+void vertex() {
+	POSITION = snap_to_position(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
 }
 
 void fragment() {
@@ -58,6 +48,9 @@ void fragment() {
 	vec2 tex_size = vec2(textureSize(albedo, 0));
 	vec2 nearest_texel = (floor(uv * tex_size) + 0.5) / tex_size;
 	vec2 offset = nearest_texel - uv;
+	if (length(offset) <= 0.05) {
+		offset = vec2(0.0);
+	}
 	vec2 x_derivative = dFdx(uv);
 	vec2 y_derivative = dFdy(uv);
 

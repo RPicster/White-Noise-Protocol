@@ -1,0 +1,100 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dp2i4jcwffhb2"
+path="res://.godot/imported/station_from_outside.glb-421e3128e467165a58f16782d21380da.scn"
+
+[deps]
+
+source_file="res://content/station/station_from_outside.glb"
+dest_files=["res://.godot/imported/station_from_outside.glb-421e3128e467165a58f16782d21380da.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Concrete": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/concrete_mat.tres",
+"use_external/path": "uid://d1l38xxj6thap"
+},
+"DarkTrim": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/dark_trim_mat.tres",
+"use_external/path": "uid://cmuqupsdr676f"
+},
+"Generic": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/generic_mat.tres",
+"use_external/path": "uid://bq4mxl4fftxhg"
+},
+"GenericGlow": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/generic_glow_mat.tres",
+"use_external/path": "uid://b3pjlegg366fx"
+},
+"Glass": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/glass_mat.tres",
+"use_external/path": "uid://e841s8c5xk3b"
+},
+"Metal": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/metal_mat.tres",
+"use_external/path": "uid://dli5bdgrahddl"
+},
+"Orange": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/orange_mat.tres",
+"use_external/path": "uid://coax8a1w24vvb"
+},
+"OrangeTrim": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/orange_trim_mat.tres",
+"use_external/path": "uid://okevvmdfpccj"
+},
+"Snow": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/snow_mat.tres",
+"use_external/path": "uid://d1ahrem6j6dpc"
+},
+"White": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/snow_mat.tres",
+"use_external/path": "uid://d1ahrem6j6dpc"
+},
+"WhiteTrim": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/white_trim_mat.tres",
+"use_external/path": "uid://bgsq16bwsfmcg"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

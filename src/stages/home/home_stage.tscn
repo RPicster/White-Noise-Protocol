@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://2blake1fdk83"]
+[gd_scene load_steps=42 format=3 uid="uid://2blake1fdk83"]
 
 [ext_resource type="PackedScene" uid="uid://cdt3hwudb0k4u" path="res://content/station/station_map.glb" id="1_v6d0o"]
 [ext_resource type="Script" uid="uid://bpmkgcaopq04q" path="res://stages/home/home_stage.gd" id="1_wtahi"]
@@ -6,12 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://bg22rxxq3pvj8" path="res://content/player/player.tscn" id="2_ng7u4"]
 [ext_resource type="PackedScene" uid="uid://bopsk1oifitej" path="res://content/landscape/landscape.tscn" id="3_bfbec"]
 [ext_resource type="Material" uid="uid://qth25g6ccp5b" path="res://content/post_process/ps1_post_process_inside_mat.tres" id="3_c287d"]
+[ext_resource type="PackedScene" uid="uid://di3fmmqk7b3f8" path="res://content/station/whiteboard_pin.glb" id="4_igoyj"]
 [ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="4_nkb35"]
 [ext_resource type="PackedScene" uid="uid://sfecj32s3gw8" path="res://system/mapcreator/map_creator.tscn" id="4_u1iqv"]
 [ext_resource type="PackedScene" uid="uid://cve5itu7qoiiu" path="res://content/environment/mountain_pieces/meshes/mountains_17.glb" id="7_cshur"]
 [ext_resource type="PackedScene" uid="uid://iuct2eat4i6l" path="res://content/environment/mountain_pieces/meshes/mountains_21.glb" id="8_wx4ic"]
 [ext_resource type="PackedScene" uid="uid://4a46d6g5hsqs" path="res://content/computer/computer_screen.tscn" id="11_wtahi"]
 [ext_resource type="Script" uid="uid://b5p4attr3nuyn" path="res://content/interactables/interaction.gd" id="12_c287d"]
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="13_c287d"]
+[ext_resource type="PackedScene" uid="uid://cdjlcyxkbrxdl" path="res://content/items/blackbox.glb" id="15_if06b"]
+[ext_resource type="AudioStream" uid="uid://dsii8gkym7t4h" path="res://sounds/wind.wav" id="16_2834x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vs8wy"]
 size = Vector3(0.64453125, 0.1, 0.30371094)
@@ -54,9 +58,6 @@ shader_parameter/alpha_scissor = 0.5
 shader_parameter/jitter = 0.25
 shader_parameter/resolution = Vector2i(640, 360)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bfbec"]
-size = Vector3(8, 1, 8)
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ng7u4"]
 sky_top_color = Color(0.6216, 0.7357714, 0.888, 1)
 sky_horizon_color = Color(0.9649123, 0.9766082, 1, 1)
@@ -84,7 +85,7 @@ glow_levels/4 = 1.0
 glow_levels/5 = 0.5
 glow_intensity = 0.25
 glow_bloom = 0.01
-glow_blend_mode = 0
+glow_blend_mode = 1
 fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0.25620002, 0.48027337, 0.61, 1)
@@ -222,7 +223,7 @@ shader_parameter/z_fade_start = 0.7999999821184
 shader_parameter/z_fade_end = 0.999999977648
 shader_parameter/use_noise = true
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_wx4ic")
-shader_parameter/noise_scale = 1.8000000268221599
+shader_parameter/noise_scale = 1.80000002682216
 shader_parameter/noise_intensity = 1.0
 shader_parameter/noise_scroll_speed = Vector2(0.01, 0.01)
 shader_parameter/noise_distortion_intensity = 0.0230000010925
@@ -254,7 +255,7 @@ shader_parameter/z_fade_start = 0.7999999821184
 shader_parameter/z_fade_end = 0.999999977648
 shader_parameter/use_noise = true
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_vs8wy")
-shader_parameter/noise_scale = 1.8000000268221599
+shader_parameter/noise_scale = 1.80000002682216
 shader_parameter/noise_intensity = 1.0
 shader_parameter/noise_scroll_speed = Vector2(0.01, 0.01)
 shader_parameter/noise_distortion_intensity = 0.0230000010925
@@ -280,7 +281,7 @@ shader_parameter/z_fade_start = 0.7999999821184
 shader_parameter/z_fade_end = 0.999999977648
 shader_parameter/use_noise = true
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_vs8wy")
-shader_parameter/noise_scale = 1.8000000268221599
+shader_parameter/noise_scale = 1.80000002682216
 shader_parameter/noise_intensity = 1.0
 shader_parameter/noise_scroll_speed = Vector2(0.01, 0.01)
 shader_parameter/noise_distortion_intensity = 0.0230000010925
@@ -308,6 +309,18 @@ shader_parameter/noise_distortion_intensity = 0.01
 shader_parameter/noise_distortion_scroll_speed = Vector2(-0.02, -0.01)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_vs8wy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wtahi"]
+size = Vector3(2.347412, 1, 1.2470703)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c287d"]
+size = Vector3(0.6677246, 1, 0.86816406)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igoyj"]
+size = Vector3(0.86169434, 2.6809082, 2.7734375)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_if06b"]
+size = Vector3(1.0466309, 2.6809082, 1.7490234)
 
 [node name="HomeStage" type="Node3D"]
 script = ExtResource("1_wtahi")
@@ -346,19 +359,12 @@ material_override = SubResource("ShaderMaterial_cshur")
 [node name="Screen" parent="station" index="2"]
 material_override = SubResource("ShaderMaterial_igoyj")
 
-[node name="MainRoomGlass" parent="station" index="18"]
+[node name="MainRoomGlass" parent="station" index="16"]
 cast_shadow = 0
 
 [node name="Player" parent="." instance=ExtResource("2_ng7u4")]
 is_inside = true
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22697449, -0.36646557)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32317054, 0)
-shape = SubResource("BoxShape3D_bfbec")
-debug_color = Color(0, 1.0767158, 1.2595311, 0.41960785)
+max_speed = 3.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bfbec")
@@ -614,9 +620,9 @@ mesh = SubResource("PlaneMesh_vs8wy")
 skeleton = NodePath("../../..")
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="Inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5994296, 1.1079834, 0.732674)
-light_color = Color(1, 0.835015, 0.61167026, 1)
-light_energy = 0.2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5994296, 1.2389655, 0.78650343)
+light_color = Color(1, 0.7393377, 0.40314156, 1)
+light_energy = 0.305
 shadow_bias = 0.05
 shadow_normal_bias = 2.634
 shadow_blur = 2.0
@@ -624,9 +630,9 @@ omni_range = 1.27
 omni_attenuation = 1.5
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="Inside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4976435, 1.1079834, 0.732674)
-light_color = Color(1, 0.835015, 0.61167026, 1)
-light_energy = 0.2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4976435, 1.2389655, 0.78650343)
+light_color = Color(1, 0.7393377, 0.40314156, 1)
+light_energy = 0.305
 shadow_bias = 0.05
 shadow_normal_bias = 2.634
 shadow_blur = 2.0
@@ -648,9 +654,45 @@ transform = Transform3D(0.421669, 0, 0.90674984, 0, 1, 0, -0.90674984, 0, 0.4216
 [node name="mountains_22" parent="Outside" instance=ExtResource("8_wx4ic")]
 transform = Transform3D(0.421669, 0, 0.90674984, 0, 1, 0, -0.90674984, 0, 0.421669, 23.56216, -3.46978, 33.22058)
 
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.8695294, 0, -0.49388117, 0, 1, 0, 0.49388117, 0, 0.8695294, -1.3804208, 0.33791304, 1.9579206)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_wtahi")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.68817735, 0, -0.7255425, 0, 1, 0, 0.7255425, 0, 0.68817735, -0.6453495, 0.33791304, 1.6513703)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7881393e-07, 0, -0.060037732)
+shape = SubResource("BoxShape3D_c287d")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(0.92625916, 0, -0.3768871, 0, 1, 0, 0.3768871, 0, 0.92625916, -1.6684307, 0.33791304, 1.2328372)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7881393e-07, 0, -0.060037732)
+shape = SubResource("BoxShape3D_c287d")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+transform = Transform3D(0.42016494, 0, -0.90744776, 0, 1, 0, 0.90744776, 0, 0.42016494, -1.5235392, 0.33791304, -2.4643536)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0969851, 0.75671387, -0.060037494)
+shape = SubResource("BoxShape3D_igoyj")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.4991079, 0, -0.86653984, 0, 1, 0, 0.86653984, 0, -0.4991079, 1.5952479, 0.33791304, -2.6434224)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
+transform = Transform3D(1.0000035, 0, 0, 0, 1, 0, 0, 0, 1.0000035, -0.09698486, 0.75671387, -0.060037374)
+shape = SubResource("BoxShape3D_if06b")
+
 [node name="MapCreator" parent="." instance=ExtResource("4_u1iqv")]
 
 [node name="ScreenViewport" type="SubViewport" parent="."]
+gui_disable_input = true
+gui_snap_controls_to_pixels = false
 positional_shadow_atlas_size = 0
 positional_shadow_atlas_16_bits = false
 positional_shadow_atlas_quad_2 = 2
@@ -661,6 +703,119 @@ render_target_update_mode = 4
 
 [node name="ComputerScreen" parent="ScreenViewport" instance=ExtResource("11_wtahi")]
 
+[node name="Fade" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="BlackFade" type="ColorRect" parent="Fade"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="IntroLabel1" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("13_c287d")
+theme_override_font_sizes/font_size = 20
+text = "Hours of silence.
+
+This never happened before."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel2" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("13_c287d")
+theme_override_font_sizes/font_size = 20
+text = "Your coworker went out to fix the stations.
+
+Sometimes they shutdown with no damn reason."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="IntroLabel3" type="Label" parent="Fade"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("13_c287d")
+theme_override_font_sizes/font_size = 20
+text = "The radio crackles. It is your coworker.
+Barely survived a harsh storm.
+
+Back to work.
+Bring the stations back online.
+
+And collect black boxes - that's what you are here for."
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters_behavior = 1
+
+[node name="Shit" type="Node3D" parent="."]
+
+[node name="blackbox" parent="Shit" instance=ExtResource("15_if06b")]
+transform = Transform3D(-4.276479, 0, -2.542116, 0, 4.975, 0, 2.542116, 0, -4.276479, 0.71986485, -5.960464e-08, 2.654678)
+
+[node name="blackbox2" parent="Shit" instance=ExtResource("15_if06b")]
+transform = Transform3D(-4.276479, 0, -2.542116, 0, 4.975, 0, 2.542116, 0, -4.276479, 0.98918223, -5.960464e-08, 2.4945848)
+
+[node name="blackbox3" parent="Shit" instance=ExtResource("15_if06b")]
+transform = Transform3D(-4.276479, 0, -2.542116, 0, 4.975, 0, 2.542116, 0, -4.276479, 1.2967734, -5.960464e-08, 2.31174)
+
+[node name="Blackbox" parent="Shit/blackbox3" index="0"]
+transform = Transform3D(0.8398758, 0, 0.54277873, 0, 0.9999998, 0, -0.54277873, 0, 0.8398758, 0.012005717, 0, -0.020196617)
+
+[node name="blackbox4" parent="Shit" instance=ExtResource("15_if06b")]
+transform = Transform3D(-4.677993, -0.71777916, 1.533557, -1.4093957, 4.147865, -2.3578477, -0.9384067, -2.6515343, -4.103582, 1.1734644, 0.20572303, 2.640204)
+
+[node name="blackbox5" parent="Shit" instance=ExtResource("15_if06b")]
+transform = Transform3D(-4.6779923, -0.71777904, 1.5335569, -0.71329474, 4.921939, 0.12785745, -1.5356476, -0.09965038, -4.731013, 0.88088757, 0.16172846, 2.6418061)
+
+[node name="whiteboard_pin" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.8165509, -0.10578418, 0.5674984, -7.450581e-09, 0.98306674, 0.18324795, -0.5772734, -0.14963128, 0.802724, -1.2477832, 1.1743261, -2.5705457)
+
+[node name="whiteboard_pin5" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.9543659, -0.10578417, 0.2792766, 0.058109023, 0.98306674, 0.17379054, -0.29293174, -0.14963126, 0.9443524, -2.3315861, 1.8009783, -2.220654)
+
+[node name="whiteboard_pin6" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.47177827, -0.10578417, 0.8753485, -0.082844965, 0.98306674, 0.1634519, -0.8778166, -0.14963126, 0.4550258, -2.258026, 1.7853645, -2.2577014)
+
+[node name="whiteboard_pin2" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.81655097, -0.24046358, 0.5248066, -1.4901161e-08, 0.9091126, 0.41655058, -0.5772735, -0.34013474, 0.7423367, -1.3005754, 1.9642271, -2.7272847)
+
+[node name="whiteboard_pin3" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.99914026, 0, 0.041457146, 0, 1, 0, -0.041457146, 0, 0.99914026, -1.4954997, 1.3236688, -2.5051615)
+
+[node name="whiteboard_pin4" parent="Shit" instance=ExtResource("4_igoyj")]
+transform = Transform3D(0.8165509, 0, 0.5772735, 0, 1, 0, -0.5772735, 0, 0.8165509, -0.7765545, 2.1089218, -2.9993086)
+
+[node name="Wind" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_2834x")
+volume_db = -20.0
+autoplay = true
+
 [connection signal="highlight_stopped" from="ComputerInteraction" to="." method="_on_computer_highlight_stopped"]
 [connection signal="highlights_started" from="ComputerInteraction" to="." method="_on_computer_highlights_started"]
 [connection signal="interacted" from="ComputerInteraction" to="." method="_on_computer_interacted"]
@@ -668,3 +823,8 @@ render_target_update_mode = 4
 
 [editable path="station_map"]
 [editable path="station"]
+[editable path="Shit/blackbox"]
+[editable path="Shit/blackbox2"]
+[editable path="Shit/blackbox3"]
+[editable path="Shit/blackbox4"]
+[editable path="Shit/blackbox5"]

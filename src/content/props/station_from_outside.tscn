@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3kq6ja7dx6q6"]
+
+[ext_resource type="PackedScene" uid="uid://dp2i4jcwffhb2" path="res://content/station/station_from_outside.glb" id="1_67ir6"]
+[ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="2_wbitm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_67ir6"]
+height = 4.5200195
+radius = 3.5551758
+
+[node name="StationFromOutside" type="Node3D"]
+
+[node name="station_from_outside" parent="." instance=ExtResource("1_67ir6")]
+
+[node name="Label3D" type="Label3D" parent="station_from_outside"]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 2.282371, 1.1038815, 3.1628582)
+alpha_cut = 1
+modulate = Color(0.8901961, 0.4392157, 0, 1)
+text = "EVERETT"
+font = ExtResource("2_wbitm")
+font_size = 55
+outline_size = 0
+
+[node name="Label3D2" type="Label3D" parent="station_from_outside"]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 2.282371, 0.9103627, 3.1628582)
+alpha_cut = 1
+modulate = Color(0.8901961, 0.4392157, 0, 1)
+text = "Outpost 32"
+font = ExtResource("2_wbitm")
+font_size = 26
+outline_size = 0
+
+[node name="Label3D3" type="Label3D" parent="station_from_outside"]
+transform = Transform3D(0.86544883, 0, -0.5009972, 0, 1, 0, 0.5009972, 0, 0.86544883, -2.3040798, 1.1038815, 3.1422145)
+alpha_cut = 1
+modulate = Color(0.8901961, 0.4392157, 0, 1)
+text = "EVERETT"
+font = ExtResource("2_wbitm")
+font_size = 55
+outline_size = 0
+
+[node name="Label3D4" type="Label3D" parent="station_from_outside"]
+transform = Transform3D(0.86544883, 0, -0.5009972, 0, 1, 0, 0.5009972, 0, 0.86544883, -2.3040798, 0.9103627, 3.1422145)
+alpha_cut = 1
+modulate = Color(0.8901961, 0.4392157, 0, 1)
+text = "Outpost 32"
+font = ExtResource("2_wbitm")
+font_size = 26
+outline_size = 0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3054199, 0)
+shape = SubResource("CylinderShape3D_67ir6")

@@ -84,10 +84,20 @@ _subresources={
 "use_external/fallback_path": "res://content/materials/orange_trim_mat.tres",
 "use_external/path": "uid://okevvmdfpccj"
 },
+"Posters": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/poster_mat.tres",
+"use_external/path": "uid://b838y6s1p7nto"
+},
 "Snow": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://content/materials/ps1_wtp_snow_rock_mat.tres",
 "use_external/path": "uid://1psxkxeo6nwf"
+},
+"Sticky": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://content/materials/sticky_mat.tres",
+"use_external/path": "uid://dji1bxlf5spkc"
 },
 "White": {
 "use_external/enabled": true,
