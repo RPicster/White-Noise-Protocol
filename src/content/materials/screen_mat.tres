@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0ojaj4mkamg3"]
+
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="1_0fpvp"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_0fpvp")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/glow = 4.0
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/backlight = 0.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(640, 360)

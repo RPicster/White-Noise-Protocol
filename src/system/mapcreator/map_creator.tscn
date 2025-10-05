@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://sfecj32s3gw8"]
+
+[ext_resource type="Script" uid="uid://bjinra3s2jn77" path="res://system/mapcreator/map_creator.gd" id="1_0hlja"]
+
+[node name="MapCreator" type="SubViewport"]
+own_world_3d = true
+size = Vector2i(2048, 2048)
+script = ExtResource("1_0hlja")
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 500, 0)
+projection = 1
+current = true
+size = 1000.0

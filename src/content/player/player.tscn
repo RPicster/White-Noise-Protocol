@@ -1,0 +1,375 @@
+[gd_scene load_steps=18 format=3 uid="uid://bg22rxxq3pvj8"]
+
+[ext_resource type="Script" uid="uid://b62yyvshlyntb" path="res://content/player/player.gd" id="1_2rga7"]
+[ext_resource type="Material" uid="uid://i11xch2q05kl" path="res://content/post_process/ps1_post_process_mat.tres" id="2_y66qv"]
+[ext_resource type="PackedScene" uid="uid://cnchhtveu4jmf" path="res://content/items/compass/compass.tscn" id="3_oq5wi"]
+[ext_resource type="Material" uid="uid://qth25g6ccp5b" path="res://content/post_process/ps1_post_process_inside_mat.tres" id="4_3ac0f"]
+[ext_resource type="Texture2D" uid="uid://olfnp8sdg1p6" path="res://content/materials/texture/noise.png" id="4_i4jjh"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_oq5wi"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4mxd"]
+radius = 0.2
+height = 1.6
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_2rga7"]
+
+[sub_resource type="Shader" id="Shader_3ac0f"]
+code = "shader_type spatial;
+render_mode blend_mix, cull_back, diffuse_burley, specular_disabled;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_noise : filter_linear_mipmap, repeat_enable;
+uniform sampler2D texture_lifetime_alpha : source_color,filter_linear_mipmap;
+uniform float proximity_fade_distance;
+uniform float distance_fade_min;
+uniform float distance_fade_max;
+uniform float close_fade_min;
+uniform float close_fade_max;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform float alpha_mod;
+uniform float albedo_fog_influence = 0.2;
+uniform float scroll_speed = 0.1;
+
+void vertex() {
+	// Billboard Mode: Enabled
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
+			MAIN_CAM_INV_VIEW_MATRIX[0],
+			MAIN_CAM_INV_VIEW_MATRIX[1],
+			MAIN_CAM_INV_VIEW_MATRIX[2],
+			MODEL_MATRIX[3]);
+
+	// Billboard Keep Scale: Enabled
+	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
+			vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
+			vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
+			vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
+			vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+}
+
+void fragment() {
+	vec2 base_uv = UV * uv1_scale.xy + uv1_offset.xy;;
+	float particle_seed = COLOR.g;
+	float lifetime_alpha = texture(texture_lifetime_alpha, vec2(COLOR.a)).r;
+	float noise_tex = texture(texture_noise, vec2(particle_seed)+(0.02*scroll_speed)*TIME+base_uv*(0.3+COLOR.a*0.015)).r * texture(texture_noise, vec2(particle_seed)+(0.03*scroll_speed)*TIME-base_uv*(0.4+COLOR.a*0.015)).r;
+	float noise_tex2 = texture(texture_noise, vec2(particle_seed)+(0.02*scroll_speed)*TIME+base_uv*(0.2+COLOR.a*0.115)).g * texture(texture_noise, vec2(particle_seed)+(0.03*scroll_speed)*TIME-base_uv*(0.2+COLOR.a*0.115)).g;
+
+	float fog = noise_tex * noise_tex2;
+
+	ALBEDO = albedo.rgb + fog * albedo_fog_influence;
+	float depth_tex = textureLod(depth_texture,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex,1.0);
+	world_pos.xyz/=world_pos.w;
+	float prox = clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+	float dist = clamp(smoothstep(distance_fade_min, distance_fade_max, length(VERTEX)), 0.0, 1.0);
+	float fade_close = clamp(smoothstep(close_fade_max, close_fade_min, length(VERTEX)), 0.0, 1.0);
+	float edge_fade = abs(1.0-clamp(length(UV-0.5), 0.0, 0.5)*2.0);
+	float base_alpha = albedo.a * fog * lifetime_alpha * edge_fade * COLOR.r;
+	ALPHA *= clamp(base_alpha*prox*dist*fade_close*alpha_mod, 0.0, 1.0);
+	//ALPHA_SCISSOR_THRESHOLD = 0.15;
+	BACKLIGHT = ALBEDO;
+	SPECULAR = 0.0;
+	ROUGHNESS = 1.0;
+
+	//ALBEDO = COLOR.rgb;
+	//ALPHA = 1.0;
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_o23i7"]
+offsets = PackedFloat32Array(0, 0.23640494, 0.8206746, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gdtqi"]
+gradient = SubResource("Gradient_o23i7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmk25"]
+render_priority = 0
+shader = SubResource("Shader_3ac0f")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_noise = ExtResource("4_i4jjh")
+shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_gdtqi")
+shader_parameter/proximity_fade_distance = 0.6
+shader_parameter/distance_fade_min = 10.0
+shader_parameter/distance_fade_max = 4.0
+shader_parameter/close_fade_min = 1.2
+shader_parameter/close_fade_max = 0.2
+shader_parameter/uv1_scale = Vector3(0.1, 0.1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/alpha_mod = 10.0
+shader_parameter/albedo_fog_influence = 0.2
+shader_parameter/scroll_speed = 0.05
+
+[sub_resource type="Shader" id="Shader_bkj32"]
+code = "shader_type particles;
+
+uniform vec3 direction;
+uniform float spread;
+uniform float initial_speed;
+uniform float initial_angle_min;
+uniform float initial_angle_max;
+uniform float scale_min;
+uniform float scale_max;
+uniform float lifetime_randomness;
+uniform vec3 emission_box_extents;
+uniform vec3 gravity;
+uniform mat3 emission_box_rotation;
+
+
+float rand_from_seed(inout uint seed) {
+    int s = int(seed);
+    if (s == 0) s = 305420679;
+    int k = s / 127773;
+    s = 16807 * (s - k * 127773) - 2836 * k;
+    if (s < 0) s += 2147483647;
+    seed = uint(s);
+    return float(seed % uint(65536)) / 65535.0;
+}
+
+float rand_from_seed_m1_p1(inout uint seed) {
+    return rand_from_seed(seed) * 2.0 - 1.0;
+}
+
+uint hash(uint x) {
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = (x >> uint(16)) ^ x;
+	return x;
+}
+
+void start() {
+    uint base_number = NUMBER;
+    uint alt_seed = hash(base_number + 1u + RANDOM_SEED);
+
+    float angle_rand = rand_from_seed(alt_seed);
+    float speed_rand = rand_from_seed(alt_seed);
+
+    float degree_to_rad = PI / 180.0;
+    float spread_rad = spread * degree_to_rad;
+
+    if (RESTART_VELOCITY) {
+        float angle1_rad = rand_from_seed_m1_p1(alt_seed) * spread_rad;
+        float angle2_rad = rand_from_seed_m1_p1(alt_seed) * spread_rad;
+
+        vec3 direction_xz = vec3(sin(angle1_rad), 0.0, cos(angle1_rad));
+        vec3 direction_yz = vec3(0.0, sin(angle2_rad), cos(angle2_rad));
+        direction_yz.z = direction_yz.z / max(0.0001, sqrt(abs(direction_yz.z)));
+
+        vec3 spread_direction = vec3(direction_xz.x * direction_yz.z, direction_yz.y, direction_xz.z * direction_yz.z);
+        vec3 direction_nrm = length(direction) > 0.0 ? normalize(direction) : vec3(0.0, 0.0, 1.0);
+
+        vec3 binormal = cross(vec3(0.0, 1.0, 0.0), direction_nrm);
+        if (length(binormal) < 0.0001) {
+            binormal = vec3(0.0, 0.0, 1.0);
+        }
+        binormal = normalize(binormal);
+        vec3 normal = cross(binormal, direction_nrm);
+        spread_direction = binormal * spread_direction.x + normal * spread_direction.y + direction_nrm * spread_direction.z;
+
+        // Restore initial speed to control particle movement
+        VELOCITY = spread_direction * initial_speed * (1.0+speed_rand*0.3); // Reduced velocity scale to slow down movement
+    }
+
+    float base_angle = mix(initial_angle_min, initial_angle_max, angle_rand) * degree_to_rad;
+	COLOR.g = rand_from_seed(alt_seed);
+    CUSTOM.x = base_angle;
+    CUSTOM.y = 0.0;
+    CUSTOM.w = 1.0 - lifetime_randomness * rand_from_seed(alt_seed);
+
+    if (RESTART_ROT_SCALE) {
+        TRANSFORM[0].xyz = vec3(1.0, 0.0, 0.0);
+        TRANSFORM[1].xyz = vec3(0.0, 1.0, 0.0);
+        TRANSFORM[2].xyz = vec3(0.0, 0.0, 1.0);
+    }
+
+    if (RESTART_POSITION) {
+        TRANSFORM[3].xyz = vec3(rand_from_seed(alt_seed) * 2.0 - 1.0, rand_from_seed(alt_seed) * 2.0 - 1.0, rand_from_seed(alt_seed) * 2.0 - 1.0) * emission_box_extents*0.25;
+        TRANSFORM = EMISSION_TRANSFORM * TRANSFORM;
+    }
+}
+
+void process() {
+    uint base_number = NUMBER;
+    uint alt_seed = hash(base_number + 1u + RANDOM_SEED);
+
+    float angle_rand = rand_from_seed(alt_seed);
+    float scale_rand = rand_from_seed(alt_seed);
+
+    float degree_to_rad = PI / 180.0;
+
+    CUSTOM.y += DELTA / LIFETIME;
+    float tv = CUSTOM.y / CUSTOM.w;
+
+    vec3 force = gravity;
+    VELOCITY += force * DELTA * 0.1; // Reduced the influence of gravity to slow down movement
+
+    float base_angle = mix(initial_angle_min, initial_angle_max, angle_rand);
+    base_angle += CUSTOM.y * LIFETIME;
+    CUSTOM.x = base_angle * degree_to_rad;
+    COLOR.a = tv;
+
+    // Normalize and scale the transform vectors
+    float base_scale = mix(scale_min, scale_max, scale_rand);
+    base_scale = sign(base_scale) * max(abs(base_scale), 0.001);
+
+    TRANSFORM[0].xyz = normalize(TRANSFORM[0].xyz) * base_scale;
+    TRANSFORM[1].xyz = normalize(TRANSFORM[1].xyz) * base_scale;
+    TRANSFORM[2].xyz = normalize(TRANSFORM[2].xyz) * base_scale;
+
+    vec3 local_pos = TRANSFORM[3].xyz - EMISSION_TRANSFORM[3].xyz;
+	for (int i = 0; i < 3; ++i) {
+		if( local_pos[i] > emission_box_extents[i]*0.5 ){
+			local_pos[i] -= emission_box_extents[i]; }
+		if( local_pos[i] < -emission_box_extents[i]*0.5 ){
+			local_pos[i] += emission_box_extents[i]; }
+    }
+	TRANSFORM[3].xyz = local_pos + EMISSION_TRANSFORM[3].xyz;
+
+    // Transform back to world space
+    //TRANSFORM[3].xyz = EMISSION_TRANSFORM[3].xyz + transpose(emission_box_rotation) * local_pos;
+    // Adjust fade calculations using local_pos
+    float lr_fade = abs(clamp(abs(local_pos.x) / emission_box_extents.x, 0.0, 1.0));
+    float bf_fade = abs(clamp(abs(local_pos.z) / emission_box_extents.z,  0.0, 1.0));
+    float top_fade = abs(clamp(abs(local_pos.y) / emission_box_extents.y, 0.0, 1.0));
+    COLOR.r = clamp(
+        smoothstep(0.5, 0.1, top_fade) *
+        smoothstep(0.5, 0.1, lr_fade) *
+        smoothstep(0.5, 0.1, bf_fade),
+        0.0, 1.0
+    );
+
+    if (CUSTOM.y > CUSTOM.w) {
+        ACTIVE = false;
+    }
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvehv"]
+shader = SubResource("Shader_bkj32")
+shader_parameter/direction = Vector3(0, -0.5, -0.5)
+shader_parameter/spread = 10.0
+shader_parameter/initial_speed = 0.3
+shader_parameter/initial_angle_min = -360.0
+shader_parameter/initial_angle_max = 360.0
+shader_parameter/scale_min = 0.35
+shader_parameter/scale_max = 0.7
+shader_parameter/lifetime_randomness = 0.4
+shader_parameter/emission_box_extents = Vector3(10, 5, 10)
+shader_parameter/gravity = Vector3(0, -0.1, 0.03)
+shader_parameter/emission_box_rotation = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vx4xa"]
+size = Vector2(0.03, 0.03)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i4jjh"]
+render_priority = 0
+shader = SubResource("Shader_3ac0f")
+shader_parameter/albedo = Color(1, 1, 1, 0.13725491)
+shader_parameter/texture_noise = ExtResource("4_i4jjh")
+shader_parameter/texture_lifetime_alpha = SubResource("GradientTexture1D_gdtqi")
+shader_parameter/proximity_fade_distance = 0.4
+shader_parameter/distance_fade_min = 10.0
+shader_parameter/distance_fade_max = 4.0
+shader_parameter/close_fade_min = 2.0
+shader_parameter/close_fade_max = 1.0
+shader_parameter/uv1_scale = Vector3(0.1, 0.1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/alpha_mod = 6.0
+shader_parameter/albedo_fog_influence = 0.2
+shader_parameter/scroll_speed = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ac0f"]
+shader = SubResource("Shader_bkj32")
+shader_parameter/direction = Vector3(0, 0, -0.5)
+shader_parameter/spread = 10.0
+shader_parameter/initial_speed = 1.0
+shader_parameter/initial_angle_min = -360.0
+shader_parameter/initial_angle_max = 360.0
+shader_parameter/scale_min = 20.0
+shader_parameter/scale_max = 40.0
+shader_parameter/lifetime_randomness = 0.4
+shader_parameter/emission_box_extents = Vector3(10, 4, 10)
+shader_parameter/gravity = Vector3(0, 0, 0.5)
+shader_parameter/emission_box_rotation = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_2rga7")
+
+[node name="Items" type="Node3D" parent="."]
+
+[node name="Compass" parent="Items" instance=ExtResource("3_oq5wi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.172, -0.268)
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+
+[node name="PostProcessOutside" type="MeshInstance3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07582846)
+visible = false
+material_override = ExtResource("2_y66qv")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_oq5wi")
+
+[node name="PostProcessInside" type="MeshInstance3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07582846)
+visible = false
+material_override = ExtResource("4_3ac0f")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_oq5wi")
+
+[node name="Interactor" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0508008, 0)
+shape = SubResource("CapsuleShape3D_x4mxd")
+
+[node name="CollisionSeparator3D1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0.09798747)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, -0.11758512)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, -0.1077863, 1, -0.009798829)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0.1077863, 1, -0.00979882)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="Snow" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7385116, -1.7458842)
+visible = false
+sorting_offset = 4.165
+material_override = SubResource("ShaderMaterial_rmk25")
+cast_shadow = 0
+amount = 1800
+lifetime = 16.0
+process_material = SubResource("ShaderMaterial_cvehv")
+draw_pass_1 = SubResource("QuadMesh_vx4xa")
+
+[node name="Fog" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99676347, -1.7458842)
+visible = false
+sorting_offset = 4.165
+material_override = SubResource("ShaderMaterial_i4jjh")
+cast_shadow = 0
+amount = 300
+lifetime = 8.0
+process_material = SubResource("ShaderMaterial_3ac0f")
+draw_pass_1 = SubResource("QuadMesh_vx4xa")

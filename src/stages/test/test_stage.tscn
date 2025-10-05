@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://8upom653ypyv"]
+
+[ext_resource type="PackedScene" uid="uid://bg22rxxq3pvj8" path="res://content/player/player.tscn" id="2_bipwh"]
+[ext_resource type="PackedScene" uid="uid://bopsk1oifitej" path="res://content/landscape/landscape.tscn" id="3_dv6hh"]
+[ext_resource type="PackedScene" uid="uid://cwq3btl8dlhkw" path="res://content/props/radar/radar.tscn" id="22_uklpg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yec48"]
+size = Vector3(1100, 500, 100)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bipwh"]
+sky_top_color = Color(0.6216, 0.7357714, 0.888, 1)
+sky_horizon_color = Color(0.9649123, 0.9766082, 1, 1)
+
+[sub_resource type="Sky" id="Sky_7aq2q"]
+sky_material = SubResource("ProceduralSkyMaterial_bipwh")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_c820o"]
+background_mode = 2
+sky = SubResource("Sky_7aq2q")
+ambient_light_source = 3
+tonemap_mode = 4
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_intensity = 0.25
+glow_bloom = 0.01
+glow_blend_mode = 0
+fog_mode = 1
+fog_light_color = Color(0.8516129, 0.9096774, 1, 1)
+fog_sun_scatter = 0.5
+fog_density = 1.0
+fog_depth_curve = 0.4352754
+fog_depth_begin = 0.0
+
+[node name="MovementTestScene" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_bipwh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.959085, 26.355946, 108.67999)
+
+[node name="Edge" type="StaticBody3D" parent="."]
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Edge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -550)
+shape = SubResource("BoxShape3D_yec48")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Edge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 550)
+shape = SubResource("BoxShape3D_yec48")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Edge"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 550, 0, 2.4041263e-05)
+shape = SubResource("BoxShape3D_yec48")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Edge"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -550, 0, -2.4041263e-05)
+shape = SubResource("BoxShape3D_yec48")
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c820o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.15389828, 0.635316, -0.75676215, 0.01423608, 0.76438123, 0.6446074, 0.9879842, -0.109977305, 0.10859255, 0, 0.9878403, 0)
+shadow_enabled = true
+shadow_bias = 0.3
+shadow_blur = 2.0
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.25
+directional_shadow_fade_start = 0.9
+directional_shadow_max_distance = 80.0
+
+[node name="Radar" parent="." instance=ExtResource("22_uklpg")]
+transform = Transform3D(1.0798343, 0, -1.6834363, 0, 2, 0, 1.6834363, 0, 1.0798343, 1.9624634, -0.0040365458, -2.3737736)
+
+[node name="Radar2" parent="." instance=ExtResource("22_uklpg")]
+transform = Transform3D(-1.9650048, 0, -0.37249956, 0, 2, 0, 0.37249956, 0, -1.9650048, 3.7671514, 0.2003907, -10.395142)
+station_id = 2
+
+[node name="Radar3" parent="." instance=ExtResource("22_uklpg")]
+transform = Transform3D(-0.93545866, 0, -1.7677435, 0, 2, 0, 1.7677435, 0, -0.93545866, -31.701036, -6.2247276, 90.98358)
+station_id = 3
+
+[node name="Landscape" parent="." instance=ExtResource("3_dv6hh")]

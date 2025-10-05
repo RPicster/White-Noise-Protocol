@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://1psxkxeo6nwf"]
+
+[ext_resource type="Shader" uid="uid://ck7ksotds3ka5" path="res://content/materials/ps1_wtp_snow_rock.gdshader" id="1_sj8fx"]
+[ext_resource type="Texture2D" uid="uid://d3euhc57idypj" path="res://content/materials/texture/snow.png" id="2_bq3qg"]
+[ext_resource type="Texture2D" uid="uid://jwb37kcr1h2n" path="res://content/materials/texture/mountain.png" id="3_y03i2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y03i2"]
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pt74o"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_y03i2")
+as_normal_map = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_sj8fx")
+shader_parameter/LIGHT_DIR_WORLD = Vector3(0.5, 0.5, 0)
+shader_parameter/affine_mapping = false
+shader_parameter/snow_sparkle = SubResource("NoiseTexture2D_pt74o")
+shader_parameter/albedo = ExtResource("2_bq3qg")
+shader_parameter/albedo_side = ExtResource("3_y03i2")
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.250000011875
+shader_parameter/resolution = Vector2i(640, 360)
+shader_parameter/side_offset = 0.8490000878275001
+shader_parameter/side_fade = 0.4030000191425

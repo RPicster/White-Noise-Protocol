@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://d3ys72bqc3pvx"]
+
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="1_ctwyo"]
+[ext_resource type="Texture2D" uid="uid://lk10ljkyoiv" path="res://content/materials/texture/wood.png" id="2_ctwyo"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ctwyo")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/glow = 0.0
+shader_parameter/albedo = ExtResource("2_ctwyo")
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(640, 360)

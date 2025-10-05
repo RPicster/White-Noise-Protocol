@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://i11xch2q05kl"]
+
+[ext_resource type="Shader" uid="uid://77pvld45k2m3" path="res://content/post_process/ps1_post_process.gdshader" id="1_smgi7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_smgi7")
+shader_parameter/enable_fog = true
+shader_parameter/fog_color = Color(0.82941175, 0.9, 0.9, 1)
+shader_parameter/noise_color = Color(0.2614118, 0.5021177, 0.65999997, 1)
+shader_parameter/fog_distance = 20.0000009025
+shader_parameter/fog_fade_range = 18.0000008075
+shader_parameter/enable_noise = true
+shader_parameter/noise_time_fac = 2.00000009174012
+shader_parameter/enable_color_limitation = true
+shader_parameter/color_levels = 32
+shader_parameter/enable_dithering = true
+shader_parameter/dither_strength = 0.2000000095
+shader_parameter/enable_height_fog = true
+shader_parameter/fog_height = 1400.0
+shader_parameter/fog_height_fade = 1400.0
+shader_parameter/fog_minimum = 0.1
+shader_parameter/height_fog_exponent = 8.0

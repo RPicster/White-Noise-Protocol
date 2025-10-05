@@ -1,0 +1,103 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bry3xgen0sow8"]
+
+[sub_resource type="Shader" id="Shader_c820o"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, unshaded, ambient_light_disabled, fog_disabled;
+
+uniform vec3 base_color : source_color = vec3(0.85);
+uniform vec3 line_color : source_color = vec3(0.0);
+
+// Contours
+uniform int project_axis = 0; // (kept for future use; currently projecting Z/Y like before)
+uniform float contour_spacing : hint_range(0.001, 10.0) = 0.25;
+uniform float line_px : hint_range(0.25, 6.0) = 1.0;
+uniform float edge_soft_px : hint_range(0.0, 3.0) = 0.75;
+uniform float horizontal_scale : hint_range(0.001, 10.0) = 1.0;
+uniform vec2 uv_offset = vec2(0.0);
+
+// Slope darkening
+uniform float slope_strength : hint_range(0.0, 1.0) = 0.5;
+uniform float slope_power : hint_range(0.2, 8.0) = 2.0;
+uniform float slope_min = 0.5;
+uniform float slope_max = 1.0;
+
+// -------- Height gradient --------
+// Supply a GradientTexture1D (or any 1xN texture) here.
+uniform sampler2D height_ramp : hint_default_white, filter_nearest, repeat_disable;
+// World Y range to map into the ramp [0..1]
+uniform float height_min = -10.0;
+uniform float height_max = 100.0;
+// How strongly to apply the gradient over base_color (1 = full gradient, 0 = no gradient)
+uniform float gradient_strength : hint_range(0.0, 1.0) = 1.0;
+
+varying vec3 v_world_pos;
+varying vec3 v_world_normal;
+
+void vertex() {
+    v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+    v_world_normal = normalize((MODEL_NORMAL_MATRIX * NORMAL));
+}
+
+void fragment() {
+    // -------- Contour coordinate (period = 1 after division by spacing)
+    vec2 side_uv = vec2(v_world_pos.z * horizontal_scale, v_world_pos.y / contour_spacing);
+    side_uv += uv_offset;
+    float v = side_uv.y;
+
+    float dist_to_center = abs(fract(v) - 0.5);
+    float dv = fwidth(v);
+    float half_thickness_v = 0.5 * line_px * dv;
+    float soft_v = edge_soft_px * dv;
+    float line_mask = 1.0 - smoothstep(half_thickness_v, half_thickness_v + soft_v, dist_to_center);
+    line_mask = clamp(line_mask, 0.0, 1.0);
+
+    // -------- Slope darkening
+    const vec3 UP = vec3(0.0, 1.0, 0.0);
+    float flatness = clamp(dot(normalize(v_world_normal), UP), 0.0, 1.0);
+    float steep = pow(1.0 - flatness, slope_power);
+    float slope_mul = mix(1.0, mix(slope_max, slope_min, steep), slope_strength);
+
+    // -------- Height gradient
+    float range = max(height_max - height_min, 1e-5);
+    float h01 = clamp((v_world_pos.y - height_min) / range, 0.0, 1.0);
+    vec3 ramp_col = texture(height_ramp, vec2(h01, 0.5)).rgb;
+
+    // Base shading = mix your base_color with the ramp
+    vec3 base = mix(base_color, ramp_col, gradient_strength);
+
+    // Apply slope darkening, then overlay 1px contour lines
+    vec3 col = base * slope_mul;
+    col = mix(col, line_color, line_mask);
+
+    ALBEDO = col;
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_7d43n"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.15076964, 0.337, 0.413, 0.528, 0.607, 0.681)
+colors = PackedColorArray(0.18005918, 0.19495167, 0.272, 1, 0.255, 0.40375003, 0.51, 1, 0.35400003, 0.59180003, 0.6, 1, 0.57555944, 0.76, 0.73377633, 1, 0.7260741, 0.776, 0.5315711, 1, 1, 0.9222201, 0.7863461, 1, 1, 0.64764285, 0.60553837, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_svaki"]
+gradient = SubResource("Gradient_7d43n")
+width = 1024
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_c820o")
+shader_parameter/base_color = Color(1, 1, 1, 1)
+shader_parameter/line_color = Color(0.51199996, 0.51199996, 0.51199996, 1)
+shader_parameter/project_axis = 0
+shader_parameter/contour_spacing = 10.0
+shader_parameter/line_px = 2.000000083125
+shader_parameter/edge_soft_px = 0.0
+shader_parameter/horizontal_scale = 1.0
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/slope_strength = 0.166000007885
+shader_parameter/slope_power = 2.94500013336773
+shader_parameter/slope_min = -5.0
+shader_parameter/slope_max = 1.0
+shader_parameter/height_ramp = SubResource("GradientTexture1D_svaki")
+shader_parameter/height_min = -113.015
+shader_parameter/height_max = 148.295
+shader_parameter/gradient_strength = 1.0

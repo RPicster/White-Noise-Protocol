@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bq4mxl4fftxhg"]
+
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="1_vqj0f"]
+[ext_resource type="Texture2D" uid="uid://t4tl6gn1eqre" path="res://content/materials/texture/generic.png" id="2_147vi"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vqj0f")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/albedo_color = Color(1, 1, 1, 1)
+shader_parameter/albedo = ExtResource("2_147vi")
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(640, 360)

@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ruesodkawcr3"]
+
+[ext_resource type="Shader" uid="uid://bsvue2wev3eic" path="res://content/post_process/ps1_pbject_shader.gdshader" id="1_5uhd7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5uhd7")
+shader_parameter/affine_mapping = false
+shader_parameter/scroll_speed = 0.0
+shader_parameter/glow = 0.0
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/backlight = 0.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)

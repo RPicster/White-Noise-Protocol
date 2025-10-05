@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=3 uid="uid://4a46d6g5hsqs"]
+
+[ext_resource type="Script" uid="uid://un618cdwual0" path="res://content/computer/computer_screen.gd" id="1_jhk6d"]
+[ext_resource type="FontFile" uid="uid://bk43io2mlfli4" path="res://gui/CascadiaCode-Medium.ttf" id="2_yqxjl"]
+[ext_resource type="Texture2D" uid="uid://hyygip2idm7o" path="res://content/materials/texture/scanlines.png" id="3_x7pxn"]
+[ext_resource type="Texture2D" uid="uid://dsgfdefnl72sf" path="res://content/computer/everett.png" id="3_yqxjl"]
+
+[sub_resource type="Gradient" id="Gradient_wdt3v"]
+colors = PackedColorArray(0.10965957, 0.19999999, 0.0070938105, 1, 0.17142148, 0.236, 0.026983397, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yqxjl"]
+gradient = SubResource("Gradient_wdt3v")
+width = 320
+height = 240
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_okwmu"]
+offsets = PackedFloat32Array(0, 0.53575796, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tcyr8"]
+gradient = SubResource("Gradient_okwmu")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_dca6n"]
+offsets = PackedFloat32Array(0.582896, 0.8859263, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.26155242, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x7pxn"]
+gradient = SubResource("Gradient_dca6n")
+width = 320
+height = 240
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[node name="ComputerScreen" type="Node2D"]
+script = ExtResource("1_jhk6d")
+
+[node name="BG" type="ColorRect" parent="."]
+offset_right = 320.0
+offset_bottom = 240.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Content" type="Node2D" parent="."]
+
+[node name="BG" type="Sprite2D" parent="Content"]
+texture = SubResource("GradientTexture2D_yqxjl")
+centered = false
+
+[node name="Label" type="Label" parent="Content"]
+texture_filter = 2
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 306.0
+offset_bottom = 229.0
+theme_override_colors/font_color = Color(0.9139762, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_yqxjl")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Everett" type="Sprite2D" parent="Content"]
+modulate = Color(0.9137255, 1, 0, 1)
+position = Vector2(160, 110)
+scale = Vector2(1.6756757, 1.6756756)
+texture = ExtResource("3_yqxjl")
+
+[node name="Scanline1" type="Sprite2D" parent="Content"]
+modulate = Color(0.8770602, 1, 0.017228365, 0.09019608)
+position = Vector2(0, 243)
+scale = Vector2(5.0312505, 0.25)
+texture = SubResource("GradientTexture2D_tcyr8")
+centered = false
+
+[node name="Scanline2" type="Sprite2D" parent="Content"]
+modulate = Color(0.044283334, 0.05, 0.0009999991, 0.19607843)
+position = Vector2(0, -3.9999924)
+scale = Vector2(5.03125, 0.20312487)
+texture = SubResource("GradientTexture2D_tcyr8")
+centered = false
+
+[node name="Scanline3" type="Sprite2D" parent="Content"]
+modulate = Color(0, 0, 0, 0.21176471)
+position = Vector2(0, 25)
+scale = Vector2(5.0312505, 0.53125)
+texture = SubResource("GradientTexture2D_tcyr8")
+centered = false
+
+[node name="BG2" type="Sprite2D" parent="Content"]
+texture = SubResource("GradientTexture2D_x7pxn")
+centered = false
+
+[node name="TextureRect" type="TextureRect" parent="Content"]
+modulate = Color(1, 1, 1, 0.11764706)
+custom_minimum_size = Vector2(320, 240)
+offset_right = 200.0
+offset_bottom = 150.0
+mouse_filter = 2
+texture = ExtResource("3_x7pxn")
+stretch_mode = 1

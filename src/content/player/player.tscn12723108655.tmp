@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://bg22rxxq3pvj8"]
+
+[ext_resource type="Script" uid="uid://b62yyvshlyntb" path="res://content/player/player.gd" id="1_2rga7"]
+[ext_resource type="Material" uid="uid://i11xch2q05kl" path="res://content/post_process/ps1_post_process_mat.tres" id="2_y66qv"]
+[ext_resource type="PackedScene" uid="uid://cnchhtveu4jmf" path="res://content/items/compass/compass.tscn" id="3_oq5wi"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_oq5wi"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4mxd"]
+radius = 0.2
+height = 1.6
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_2rga7"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 2
+script = ExtResource("1_2rga7")
+decceleration = 20.0
+
+[node name="Items" type="Node3D" parent="."]
+
+[node name="Compass" parent="Items" instance=ExtResource("3_oq5wi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1722457, -0.31274956)
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+
+[node name="PostProcess" type="MeshInstance3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07582846)
+visible = false
+material_override = ExtResource("2_y66qv")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_oq5wi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0508008, 0)
+shape = SubResource("CapsuleShape3D_x4mxd")
+
+[node name="CollisionSeparator3D1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, 0.09798747)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1, -0.11758512)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, -0.1077863, 1, -0.009798829)
+shape = SubResource("SeparationRayShape3D_2rga7")
+
+[node name="CollisionSeparator3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0.1077863, 1, -0.00979882)
+shape = SubResource("SeparationRayShape3D_2rga7")

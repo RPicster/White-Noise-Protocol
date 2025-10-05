@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnchhtveu4jmf"]
+
+[ext_resource type="PackedScene" uid="uid://c2k1lboo64hjh" path="res://content/items/compass/compass_main.glb" id="1_0htmb"]
+[ext_resource type="Script" uid="uid://c26yv0dk5rjkj" path="res://content/items/compass/compass.gd" id="1_4qjbo"]
+[ext_resource type="PackedScene" uid="uid://c70nqiv4soq2" path="res://content/items/compass/compass_needle.glb" id="2_4qjbo"]
+[ext_resource type="PackedScene" uid="uid://d21n76bwibxjx" path="res://content/items/compass/compass_aim.glb" id="4_hpeof"]
+
+[node name="Compass" type="Node3D"]
+script = ExtResource("1_4qjbo")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="compass_main" parent="Visual" instance=ExtResource("1_0htmb")]
+
+[node name="CompassMain" parent="Visual/compass_main" index="0"]
+cast_shadow = 0
+
+[node name="compass_needle" parent="Visual" instance=ExtResource("2_4qjbo")]
+
+[node name="CompassNeedle" parent="Visual/compass_needle" index="0"]
+cast_shadow = 0
+
+[node name="compass_aim" parent="Visual" instance=ExtResource("4_hpeof")]
+
+[node name="CompassAim" parent="Visual/compass_aim" index="0"]
+cast_shadow = 0
+
+[node name="InvisibleNeedle" type="Marker3D" parent="."]
+
+[node name="InvisibleAim" type="Marker3D" parent="."]
+
+[editable path="Visual/compass_main"]
+[editable path="Visual/compass_needle"]
+[editable path="Visual/compass_aim"]
