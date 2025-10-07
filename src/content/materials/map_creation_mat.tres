@@ -66,17 +66,15 @@ void fragment() {
     vec3 base = mix(base_color, ramp_col, gradient_strength);
 
     // Apply slope darkening, then overlay 1px contour lines
-    vec3 col = base * slope_mul;
-    col = col * mix(vec3(1.0), line_color, line_mask);
-
+    vec3 col = base;
+    col = col * mix(vec3(1.0), mix(line_color, vec3(1.0), clamp(slope_mul, 0.0, 1.0)), line_mask);
     ALBEDO = col;
 }
 "
 
 [sub_resource type="Gradient" id="Gradient_7d43n"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.23901795, 0.438, 0.492, 0.565, 0.6214741, 0.74778986)
-colors = PackedColorArray(0.18005918, 0.19495167, 0.272, 1, 0.255, 0.40375003, 0.51, 1, 0.35400003, 0.59180003, 0.6, 1, 0.57555944, 0.76, 0.73377633, 1, 1, 0.9222201, 0.7863461, 1, 1, 0.68505466, 0.53316385, 1, 1, 0.3890466, 0.4464348, 1)
+offsets = PackedFloat32Array(0.19292752, 0.21031883, 0.25379708, 0.3885797, 0.4016232, 0.47988406, 0.5025915, 0.565, 0.57974285, 0.6214741, 0.63909, 0.7340455, 0.74778986, 0.7637191, 0.83200043, 0.90318495, 0.91621095, 0.9595648, 0.9688425)
+colors = PackedColorArray(0.18005918, 0.19495167, 0.272, 1, 0.255, 0.40375003, 0.51, 1, 0.33704925, 0.5596021, 0.5845902, 1, 0.35400003, 0.59180003, 0.6, 1, 0.48440212, 0.6907966, 0.6787361, 1, 0.57555944, 0.76, 0.73377633, 1, 0.84417665, 0.8626648, 0.76704633, 1, 1, 0.9222201, 0.7863461, 1, 1, 0.78553754, 0.6404328, 1, 1, 0.68505466, 0.53316385, 1, 1, 0.588144, 0.50476944, 1, 1, 0.5120528, 0.48247504, 1, 1, 0.3890466, 0.4464348, 1, 0.8315831, 0.25210708, 0.32495213, 1, 0.708, 0.15162188, 0.23580903, 1, 0.56519604, 0.121039666, 0.18824622, 1, 0.39600003, 0.084805466, 0.1318932, 1, 0.3155003, 0.06756603, 0.10508167, 1, 0.18, 0.038547937, 0.05995145, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_svaki"]
 gradient = SubResource("Gradient_7d43n")
@@ -86,18 +84,18 @@ width = 1024
 render_priority = 0
 shader = SubResource("Shader_c820o")
 shader_parameter/base_color = Color(1, 1, 1, 1)
-shader_parameter/line_color = Color(0.6, 0.6875, 0.75, 1)
+shader_parameter/line_color = Color(0.4197487, 0.48010468, 0.524, 1)
 shader_parameter/project_axis = 0
 shader_parameter/contour_spacing = 20.00000095
-shader_parameter/line_px = 2.000000083125
+shader_parameter/line_px = 3.000000130625
 shader_parameter/edge_soft_px = 0.0
 shader_parameter/horizontal_scale = 1.0
 shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/slope_strength = 0.338000016055
-shader_parameter/slope_power = 1.01500004169273
-shader_parameter/slope_min = -0.8
-shader_parameter/slope_max = 1.0
+shader_parameter/slope_strength = 1.0
+shader_parameter/slope_power = 0.20000000298023
+shader_parameter/slope_min = -1.875
+shader_parameter/slope_max = 4.145
 shader_parameter/height_ramp = SubResource("GradientTexture1D_svaki")
-shader_parameter/height_min = -104.465
-shader_parameter/height_max = 175.42
+shader_parameter/height_min = -55.345
+shader_parameter/height_max = 157.725
 shader_parameter/gradient_strength = 1.0

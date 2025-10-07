@@ -68,6 +68,7 @@ func play_intro():
 	t.tween_property(%IntroLabel3, "modulate:a", 1.0, 2.0).set_delay(19.0)
 	t.tween_property(%IntroLabel3, "modulate:a", 0.0, 1.0).set_delay(27.0)
 	t.tween_property(%BlackFade, "modulate:a", 0.0, 3.0).set_delay(24)
+	t.tween_callback(_G.player.show_tutorial).set_delay(28)
 
 
 func fade_in(duration:= 1.5):

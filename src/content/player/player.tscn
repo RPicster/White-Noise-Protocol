@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bg22rxxq3pvj8"]
+[gd_scene load_steps=42 format=3 uid="uid://bg22rxxq3pvj8"]
 
 [ext_resource type="Script" uid="uid://b62yyvshlyntb" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Material" uid="uid://i11xch2q05kl" path="res://content/post_process/ps1_post_process_mat.tres" id="2_y66qv"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://doaixckdk2t6o" path="res://sounds/footstep_snow_6.wav" id="13_fmriv"]
 [ext_resource type="AudioStream" uid="uid://chmcfxusq2ex0" path="res://sounds/footstep_snow_7.wav" id="14_v3tlx"]
 [ext_resource type="AudioStream" uid="uid://cnd2r57e1qusa" path="res://sounds/footstep_snow_8.wav" id="15_pull8"]
+[ext_resource type="FontFile" uid="uid://ccsme0sl1y8ye" path="res://gui/Aleo-Medium.ttf" id="15_q05y8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oq5wi"]
 flip_faces = true
@@ -339,6 +340,64 @@ stream_4/stream = ExtResource("13_fmriv")
 stream_5/stream = ExtResource("14_v3tlx")
 stream_6/stream = ExtResource("15_pull8")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sks62"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6pxk4"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5u4yr"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jrco"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8901961, 0.4392157, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fmriv"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3tlx"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pull8"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1esvc"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3brj4"]
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_2rga7")
@@ -507,3 +566,44 @@ vertical_alignment = 1
 stream = SubResource("AudioStreamRandomizer_1esvc")
 volume_db = -12.0
 max_polyphony = 5
+
+[node name="Tutorial" type="CanvasLayer" parent="."]
+
+[node name="TutorialContainer" type="MarginContainer" parent="Tutorial"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_top = 20
+
+[node name="Tutorial" type="Button" parent="Tutorial/TutorialContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("15_q05y8")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_sks62")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_6pxk4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5u4yr")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_8jrco")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fmriv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_v3tlx")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pull8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1esvc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3brj4")
+text = "Press [c] to check compass"

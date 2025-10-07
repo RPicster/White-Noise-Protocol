@@ -55,26 +55,8 @@ directional_shadow_split_1 = 0.25
 directional_shadow_fade_start = 0.9
 directional_shadow_max_distance = 80.0
 
-[node name="Radar" parent="." instance=ExtResource("1_chkya")]
-transform = Transform3D(-0.288397, 0, -0.9575109, 0, 1, 0, 0.9575109, 0, -0.288397, 109.191826, 16.792732, 301.78934)
-
-[node name="Radar2" parent="." instance=ExtResource("1_chkya")]
-transform = Transform3D(0.6484123, 0, -0.76128936, 0, 1, 0, 0.76128936, 0, 0.6484123, 79.60063, -16.17537, -315.7277)
-station_id = 2
-
-[node name="Radar3" parent="." instance=ExtResource("1_chkya")]
-transform = Transform3D(0.3394275, 0, -0.9406322, 0, 1, 0, 0.9406322, 0, 0.3394275, -132.33873, 24.131943, 214.84534)
-station_id = 3
-
-[node name="Radar4" parent="." instance=ExtResource("1_chkya")]
-transform = Transform3D(-0.8413505, 0, 0.5404899, 0, 1, 0, -0.5404899, 0, -0.8413505, 556.88306, 19.393791, -446.37512)
-station_id = 4
-
 [node name="Landscape" parent="." instance=ExtResource("2_osekw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22.549149, 0)
-
-[node name="Tent" parent="." instance=ExtResource("4_w1tbe")]
-transform = Transform3D(-0.60462695, 0, 0.7965088, 0, 1, 0, -0.7965088, 0, -0.60462695, 87.371925, -18.690468, -316.1836)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20.391, 0)
 
 [node name="Fade" type="CanvasLayer" parent="."]
 layer = 10
@@ -214,31 +196,49 @@ horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters_behavior = 1
 
-[node name="Snowmobile" parent="." instance=ExtResource("7_w1tbe")]
-transform = Transform3D(0.13557732, 0, -0.9907672, 0, 1, 0, 0.9907672, 0, 0.13557732, -265.85092, 38.972626, -292.43323)
-
-[node name="StationFromOutside" parent="." instance=ExtResource("8_1vd3l")]
-transform = Transform3D(0.4145027, 0, 0.91004807, 0, 1, 0, -0.91004807, 0, 0.4145027, -269.58795, 40.919056, -297.92395)
-
-[node name="Player" parent="." instance=ExtResource("3_4u7gs")]
-transform = Transform3D(-0.31831408, -4.656613e-10, 0.9479855, 1.8626451e-09, 1.0000004, 2.561137e-08, -0.9479853, 0, -0.31831414, 89.67926, -18.360458, -315.72015)
-
-[node name="Blackbox1" parent="." instance=ExtResource("9_xhuct")]
-transform = Transform3D(0.97195417, -0.22083794, 0.08084456, 0.2239663, 0.9740779, -0.031809635, -0.07172412, 0.049024045, 0.996219, 307.82687, 42.322655, -116.9925)
-
-[node name="Blackbox2" parent="." instance=ExtResource("9_xhuct")]
-transform = Transform3D(0.97195417, -0.22083794, 0.08084455, 0.22396633, 0.974078, -0.03180964, -0.07172412, 0.049024045, 0.996219, -29.111862, -6.998337, -106.35336)
-
-[node name="Blackbox3" parent="." instance=ExtResource("9_xhuct")]
-transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.09383805, 0.887966, 0.45023498, -0.17687401, -0.45990556, 0.8701739, 79.21645, -98.36054, -318.91748)
-
-[node name="Blackbox4" parent="." instance=ExtResource("9_xhuct")]
-transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.05249532, 0.9675619, 0.24712119, -0.19322067, -0.2526273, 0.94807434, -358.1915, -67.63577, -463.69318)
-
-[node name="Blackbox5" parent="." instance=ExtResource("9_xhuct")]
-transform = Transform3D(0.97975, 0.0020207313, 0.20021465, -0.05249532, 0.9675619, 0.24712119, -0.19322067, -0.2526273, 0.94807434, -540.01215, -93.68711, -196.48004)
-
 [node name="Wind" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_7iyl8")
 volume_db = -12.0
 autoplay = true
+
+[node name="Radar" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(-0.28839698, 0, -0.95751095, 0, 1, 0, 0.95751095, 0, -0.28839698, 87.35346, 14.135062, 241.43147)
+
+[node name="Radar2" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(0.64841235, 0, -0.7612893, 0, 1, 0, 0.7612893, 0, 0.64841235, 63.680508, -12.832064, -252.58215)
+station_id = 2
+
+[node name="Radar3" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(0.3394275, 0, -0.9406322, 0, 1, 0, 0.9406322, 0, 0.3394275, -105.87099, 19.928848, 171.87627)
+station_id = 3
+
+[node name="Radar4" parent="." instance=ExtResource("1_chkya")]
+transform = Transform3D(-0.8413505, 0, 0.5404899, 0, 1, 0, -0.5404899, 0, -0.8413505, 445.50644, 15.515033, -357.1001)
+station_id = 4
+
+[node name="Tent" parent="." instance=ExtResource("4_w1tbe")]
+transform = Transform3D(-0.60462695, 0, 0.7965088, 0, 1, 0, -0.7965088, 0, -0.60462695, 69.897545, -14.684709, -252.94688)
+
+[node name="Snowmobile" parent="." instance=ExtResource("7_w1tbe")]
+transform = Transform3D(0.13557725, 0, -0.99076676, 0, 1, 0, 0.99076676, 0, 0.13557725, -212.68074, 31.1781, -233.94658)
+
+[node name="StationFromOutside" parent="." instance=ExtResource("8_1vd3l")]
+transform = Transform3D(0.41450268, 0, 0.91004807, 0, 1, 0, -0.91004807, 0, 0.41450268, -215.67036, 33.464993, -238.33916)
+
+[node name="Player" parent="." instance=ExtResource("3_4u7gs")]
+transform = Transform3D(-0.3183141, 1.744275e-10, 0.9479853, 1.8626451e-09, 1, 4.414401e-10, -0.9479853, 1.906277e-09, -0.3183141, -208.27037, 31.75086, -236.49158)
+
+[node name="Blackbox1" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.9719541, -0.22083794, 0.08084457, 0.22396627, 0.97407764, -0.03180972, -0.0717241, 0.049024045, 0.99621904, 246.2615, 33.982113, -93.594)
+
+[node name="Blackbox2" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.9719541, -0.22083795, 0.08084457, 0.22396629, 0.97407764, -0.031809703, -0.0717241, 0.04902403, 0.99621904, -23.28949, -5.5986695, -85.082695)
+
+[node name="Blackbox3" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.002020575, 0.20021468, -0.09383804, 0.8879657, 0.45023477, -0.17687406, -0.45990524, 0.87017393, 63.373165, -78.68844, -255.13399)
+
+[node name="Blackbox4" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.0020205937, 0.20021461, -0.052495327, 0.96756154, 0.24712105, -0.19322063, -0.25262716, 0.9480745, -286.5532, -54.10862, -370.95456)
+
+[node name="Blackbox5" parent="." instance=ExtResource("9_xhuct")]
+transform = Transform3D(0.97975, 0.0020205937, 0.20021461, -0.052495327, 0.96756154, 0.24712105, -0.19322063, -0.25262716, 0.9480745, -432.00974, -74.94969, -157.18404)

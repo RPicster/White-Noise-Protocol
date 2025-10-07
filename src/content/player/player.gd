@@ -44,6 +44,19 @@ func _ready() -> void:
 		$Fog.show()
 		$Head/Camera3D/PostProcessOutside.show()
 
+var tut_finished := false
+func show_tutorial():
+	var t := create_tween()
+	t.tween_property(%TutorialContainer, "modulate:a", 1.0, 0.5)
+
+func finish_tutorial():
+	if tut_finished:
+		return
+	tut_finished = true
+	var t := create_tween()
+	t.tween_property(%TutorialContainer, "modulate:a", 0.0, 0.5)
+	
+
 func _physics_process(delta: float) -> void:
 	if block:
 		return
@@ -78,7 +91,7 @@ func slowly_heal(delta):
 	damage.modulate.a = remap(health, 0.0, 20.0, 1.0, 0.0)
 
 func check_kill():
-	if global_position.y <= -70.0:
+	if global_position.y <= -35.0:
 		drown()
 
 func drown():

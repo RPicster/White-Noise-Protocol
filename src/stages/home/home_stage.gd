@@ -75,3 +75,7 @@ func stopped_using_computer(cam:Camera3D):
 
 func _on_computer_exit_request() -> void:
 	stop_using_computer()
+
+
+func _on_computer_screen_beep() -> void:
+	$Beep.play()

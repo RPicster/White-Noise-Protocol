@@ -14,7 +14,7 @@ script = ExtResource("1_0hlja")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 500, 0)
 projection = 1
 current = true
-size = 1337.73
+size = 1080.22
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

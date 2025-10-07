@@ -200,3 +200,9 @@ stretch_mode = 1
 stream = SubResource("AudioStreamRandomizer_6rlg1")
 volume_db = -7.0
 max_polyphony = 5
+bus = &"Inside"
+
+[node name="BeepTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]

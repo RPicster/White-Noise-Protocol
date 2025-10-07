@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 			linear_velocity *= 0.98
 			tilt(delta)
 		return
-	if global_position.y <= -70.0:
+	if global_position.y <= -35.0:
 		drown()
 		return
 	control_sound()
@@ -164,6 +164,8 @@ func _on_highlights_started() -> void:
 	$Visual/snowmobile/Cube_012.material_overlay = _G.HIGHLIGHT_MAT
 
 func control_sound():
-	var v : float= clamp(linear_velocity.length() / 20.0, 0.0, 1.0)
-	$Idle.volume_db = remap(clamp(v, 0.2, 0.8), 0.3, 0.6, -10.0, -70.0)
-	$Go.volume_db = remap(clamp(v, 0.4, 0.6), 0.3, 1.0, -70.0, -10.0)
+	var v : float= clamp(linear_velocity.length() / 30.0, 0.0, 1.0)
+	$Idle.volume_db = remap(clamp(ease(v, 1.4), 0.0, 0.8), 0.0, 0.8, -10.0, -70.0)
+	$Idle.pitch_scale = remap(clamp(ease(v, 1.4), 0.0, 0.8), 0.0, 0.8, 0.8, 1.2)
+	$Go.volume_db = remap(clamp(ease(v, 0.5), 0.0, 0.6), 0.0, 0.6, -70.0, -10.0)
+	$Go.pitch_scale = remap(clamp(ease(v, 0.5), 0.0, 1.0), 0.0, 1.0, 0.8, 1.2)

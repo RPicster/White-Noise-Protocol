@@ -25,6 +25,8 @@ transform = Transform3D(4.975, 0, 0, 0, 4.975, 0, 0, 0, 4.975, 0, 0, 0)
 
 [node name="Label3D2" type="Label3D" parent="."]
 transform = Transform3D(-6.2992953e-09, -0.086810775, 0.16788355, -3.7946193e-09, 0.16788355, 0.086810775, -0.189, -4.772882e-10, -7.338423e-09, 0.053584006, 0.062710375, 0.06681866)
+shaded = true
+double_sided = false
 alpha_cut = 1
 modulate = Color(0, 0, 0, 1)
 text = "RECORDER"
@@ -34,6 +36,8 @@ outline_size = 0
 
 [node name="Label3D3" type="Label3D" parent="."]
 transform = Transform3D(-2.3301963e-09, -0.23009163, 0.074978925, -9.123262e-09, 0.074978925, 0.23009163, -0.24199998, -6.111313e-10, -9.396287e-09, 0.03643585, 0.08256316, 0.06681866)
+shaded = true
+double_sided = false
 alpha_cut = 1
 modulate = Color(0, 0, 0, 1)
 text = "FLIGHT"

@@ -1,6 +1,7 @@
 extends Node2D
 
 signal computer_exit_request
+signal beep
 
 @onready var scanline_1: Sprite2D = $Content/Scanline1
 @onready var scanline_2: Sprite2D = $Content/Scanline2
@@ -14,6 +15,7 @@ const VALID := [
 ]
 var screens := {
 	"start" : "### Welcome User %s!
+			%s
 			
 			Enter Command:
 			> %s",
@@ -104,6 +106,7 @@ var last_state_before_unknown_command := STATE.START
 var last_command := ""
 var selected_station := 1
 var selected_log := 1
+var new_scans_available := false
 @onready var label: Label = $Content/Label
 
 func start_computer():
@@ -214,10 +217,16 @@ func enter_command():
 		if inp == "exit":
 			change_state(STATE.START)
 		elif inp == "2" and _G.get_online_station_count() == 4:
+			done_scans[1] = true
+			new_scans_available = false
+			$BeepTimer.stop()
 			$Content/ScanResult1.hide()
 			$Content/ScanResult2.hide()
 			change_state(STATE.SCAN_RESULT_2)
 		elif inp == "1" and _G.get_online_station_count() >= 2:
+			done_scans[0] = true
+			new_scans_available = false
+			$BeepTimer.stop()
 			$Content/ScanResult1.hide()
 			$Content/ScanResult2.hide()
 			change_state(STATE.SCAN_RESULT_1)
@@ -300,7 +309,23 @@ func change_state(new_state:STATE):
 	state = new_state
 	reveal = 0
 
+var available_scans := [false, false]
+var done_scans := [false, false]
+func check_scans():
+	var s := _G.get_online_station_count()
+	if s == 4 and not available_scans[1]:
+		new_scans_available = true
+		beep.emit()
+		$BeepTimer.start()
+		available_scans[1] = true
+	elif s >= 2 and not available_scans[0]:
+		new_scans_available = true
+		beep.emit()
+		$BeepTimer.start()
+		available_scans[0] = true
+
 func _physics_process(delta: float) -> void:
+	check_scans()
 	scanline_effect(delta)
 	appendtimer = wrapf(appendtimer+delta, 0.0, 1.0)
 	just_changed_screen = max(0.0, just_changed_screen-delta)
@@ -347,7 +372,10 @@ func _physics_process(delta: float) -> void:
 			show_unknown_command()
 
 func show_start():
-	label.text = screens["start"] % [user_id, current_input + get_input_char()]
+	var scan_text = "NEW SIGNAL FOR SCANNING!" if new_scans_available else ""
+	if appendtimer > 0.5:
+		scan_text = ""
+	label.text = screens["start"] % [user_id, scan_text, current_input + get_input_char()]
 
 func show_manual():
 	label.text = screens["manual"] % [current_input + get_input_char()]
@@ -468,3 +496,7 @@ func scanline_effect(delta:float):
 	scanline_1.position.y = wrapf(scanline_1.position.y+delta*10.0, -16.0, 240.0)
 	scanline_2.position.y = wrapf(scanline_2.position.y+delta*70.0, -4.0, 240.0)
 	scanline_3.position.y = wrapf(scanline_3.position.y+delta*30.0, -50.0, 240.0)
+
+
+func _on_beep_timer_timeout() -> void:
+	beep.emit()

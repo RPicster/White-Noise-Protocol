@@ -61,6 +61,8 @@ visible = false
 
 [node name="Label3D" type="Label3D" parent="radar/RadarmastTop" index="1"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 5.4986277, -0.5088016)
+shaded = true
+double_sided = false
 alpha_cut = 1
 text = "Station 1"
 font = ExtResource("4_sufeq")

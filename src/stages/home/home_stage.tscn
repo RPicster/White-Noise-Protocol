@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://2blake1fdk83"]
+[gd_scene load_steps=43 format=3 uid="uid://2blake1fdk83"]
 
 [ext_resource type="PackedScene" uid="uid://cdt3hwudb0k4u" path="res://content/station/station_map.glb" id="1_v6d0o"]
 [ext_resource type="Script" uid="uid://bpmkgcaopq04q" path="res://stages/home/home_stage.gd" id="1_wtahi"]
@@ -16,6 +16,7 @@
 [ext_resource type="FontFile" uid="uid://egyhs8md2q5l" path="res://gui/Aleo-Bold.ttf" id="13_c287d"]
 [ext_resource type="PackedScene" uid="uid://cdjlcyxkbrxdl" path="res://content/items/blackbox.glb" id="15_if06b"]
 [ext_resource type="AudioStream" uid="uid://dsii8gkym7t4h" path="res://sounds/wind.wav" id="16_2834x"]
+[ext_resource type="AudioStream" uid="uid://cdb7u7x5dduhy" path="res://sounds/beep_2.wav" id="17_4srwc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vs8wy"]
 size = Vector3(0.64453125, 0.1, 0.30371094)
@@ -815,10 +816,20 @@ transform = Transform3D(0.8165509, 0, 0.5772735, 0, 1, 0, -0.5772735, 0, 0.81655
 stream = ExtResource("16_2834x")
 volume_db = -20.0
 autoplay = true
+bus = &"Inside"
+
+[node name="Beep" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6507473, 1.7195737, -2.6895854)
+stream = ExtResource("17_4srwc")
+volume_db = -6.0
+unit_size = 4.0
+max_db = -3.0
+bus = &"Inside"
 
 [connection signal="highlight_stopped" from="ComputerInteraction" to="." method="_on_computer_highlight_stopped"]
 [connection signal="highlights_started" from="ComputerInteraction" to="." method="_on_computer_highlights_started"]
 [connection signal="interacted" from="ComputerInteraction" to="." method="_on_computer_interacted"]
+[connection signal="beep" from="ScreenViewport/ComputerScreen" to="." method="_on_computer_screen_beep"]
 [connection signal="computer_exit_request" from="ScreenViewport/ComputerScreen" to="." method="_on_computer_exit_request"]
 
 [editable path="station_map"]

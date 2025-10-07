@@ -13,6 +13,7 @@ radius = 3.5551758
 
 [node name="Label3D" type="Label3D" parent="station_from_outside"]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 2.282371, 1.1038815, 3.1628582)
+shaded = true
 alpha_cut = 1
 modulate = Color(0.8901961, 0.4392157, 0, 1)
 text = "EVERETT"
@@ -22,6 +23,7 @@ outline_size = 0
 
 [node name="Label3D2" type="Label3D" parent="station_from_outside"]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 2.282371, 0.9103627, 3.1628582)
+shaded = true
 alpha_cut = 1
 modulate = Color(0.8901961, 0.4392157, 0, 1)
 text = "Outpost 32"
@@ -31,6 +33,7 @@ outline_size = 0
 
 [node name="Label3D3" type="Label3D" parent="station_from_outside"]
 transform = Transform3D(0.86544883, 0, -0.5009972, 0, 1, 0, 0.5009972, 0, 0.86544883, -2.3040798, 1.1038815, 3.1422145)
+shaded = true
 alpha_cut = 1
 modulate = Color(0.8901961, 0.4392157, 0, 1)
 text = "EVERETT"
@@ -40,6 +43,7 @@ outline_size = 0
 
 [node name="Label3D4" type="Label3D" parent="station_from_outside"]
 transform = Transform3D(0.86544883, 0, -0.5009972, 0, 1, 0, 0.5009972, 0, 0.86544883, -2.3040798, 0.9103627, 3.1422145)
+shaded = true
 alpha_cut = 1
 modulate = Color(0.8901961, 0.4392157, 0, 1)
 text = "Outpost 32"

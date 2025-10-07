@@ -52,6 +52,7 @@ subdivide_depth = 10
 [node name="Landscape" type="Node3D"]
 
 [node name="Mountains" type="Node3D" parent="." groups=["copy-for-map"]]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 
 [node name="mountains_00" parent="Mountains" instance=ExtResource("1_1lxua")]
 transform = Transform3D(0.87804455, 0.063370325, -0.4743648, -0.07198487, 0.9974057, 0, 0.47313416, 0.034147087, 0.88032836, -355.33905, 31.059448, -263.5694)
@@ -60,7 +61,7 @@ transform = Transform3D(0.87804455, 0.063370325, -0.4743648, -0.07198487, 0.9974
 transform = Transform3D(0.8929232, 0.064444155, 0.4455728, -0.07198487, 0.9974057, 4.6489984e-10, -0.44441685, -0.0320745, 0.89524573, -447.5485, 42.636505, -320.73038)
 
 [node name="mountains_12" parent="Mountains" instance=ExtResource("1_1lxua")]
-transform = Transform3D(-0.8574099, 0, 0.5146341, 0, 1, 0, -0.5146341, 0, -0.8574099, -204.60464, 46.49859, -306.87476)
+transform = Transform3D(-0.6859279, 0, 0.4117073, 0, 0.8, 0, -0.4117073, 0, -0.6859279, -204.60464, 46.49859, -306.87476)
 
 [node name="mountains_122" parent="Mountains" instance=ExtResource("1_1lxua")]
 transform = Transform3D(-0.8574099, 0, 0.5146341, 0, 1, 0, -0.5146341, 0, -0.8574099, -114.908936, 38.832924, 0.38308716)
@@ -276,7 +277,10 @@ transform = Transform3D(0.9966167, 0.018984543, -0.07996516, -0.026521387, 0.995
 transform = Transform3D(-0.9655807, -0.03849435, 0.25723916, -0.030562876, 0.9989282, 0.034762055, -0.25830147, 0.025703613, -0.96572244, -269.11035, 27.569305, -354.78897)
 
 [node name="mountains_102" parent="Mountains" instance=ExtResource("4_egxjp")]
-transform = Transform3D(0.86457473, -0.038494356, -0.5010277, 0.020397581, 0.9989281, -0.04155035, 0.50209, 0.025703615, 0.8644334, -286.3284, 66.77447, -295.06354)
+transform = Transform3D(0.86457455, -0.03849436, -0.5010277, 0.020397587, 0.99892807, -0.041550342, 0.50209004, 0.025703615, 0.8644333, -286.51013, 71.490135, -294.9422)
+
+[node name="mountains_212" parent="Mountains" instance=ExtResource("4_egxjp")]
+transform = Transform3D(0.62241304, -0.03849436, -0.7817417, 0.0038458374, 0.99892807, -0.046127018, 0.7826792, 0.025703613, 0.62189424, -260.85202, 48.231556, -318.72363)
 
 [node name="mountains_62" parent="Mountains" instance=ExtResource("4_egxjp")]
 transform = Transform3D(0.9262815, -0.016396804, 0.37647524, -0.0011244342, 0.99892807, 0.046273366, -0.3768306, -0.0432855, 0.92527026, -445.77444, 62.86373, 265.19992)
@@ -663,7 +667,7 @@ transform = Transform3D(0.024814371, -0.07530469, -0.9968521, -0.15660107, 0.984
 transform = Transform3D(-0.60372156, 0.41678682, -0.6795656, 0.17331989, 0.9006777, 0.3984217, 0.7781263, 0.12275352, -0.6159962, 444.1301, 43.04553, -53.297134)
 
 [node name="Ground2" parent="." groups=["copy-for-map"] instance=ExtResource("30_uty3i")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, -63.91339, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -48.59191, 0)
 
 [node name="Landscape" parent="Ground2" index="0"]
 instance_shader_parameters/tiling = Vector3(120, 120, 120)
@@ -672,7 +676,7 @@ instance_shader_parameters/tiling = Vector3(120, 120, 120)
 collision_mask = 0
 
 [node name="Water" type="MeshInstance3D" parent="." groups=["copy-for-map"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.801636, 0)
 material_override = SubResource("ShaderMaterial_lsmqv")
 mesh = SubResource("PlaneMesh_m3r4d")
 
